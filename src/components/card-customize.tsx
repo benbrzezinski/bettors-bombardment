@@ -21,12 +21,12 @@ import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
-import { useToast } from "@/components/ui/use-toast";
 import useStore from "@/store";
+import { toast } from "./ui/use-toast";
 
 interface PlayerData {
   name: string;
-  value: number;
+  value: string;
 }
 
 export default function CardCustomize() {
@@ -38,12 +38,14 @@ export default function CardCustomize() {
     setAmountOfRounds,
     setPlayers,
   } = useStore();
-  const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
     setPlayersData(
-      Array.from({ length: numberOfPlayers }, () => ({ name: "", value: 100 }))
+      Array.from({ length: numberOfPlayers }, () => ({
+        name: "",
+        value: "1000",
+      }))
     );
   }, [numberOfPlayers]);
 
@@ -56,20 +58,31 @@ export default function CardCustomize() {
   };
 
   const startGame = () => {
-    if (!numberOfPlayers || !amountOfRounds || !playersData.length) {
+    if (
+      !numberOfPlayers ||
+      !amountOfRounds ||
+      !playersData.every(
+        ({ name, value }) => name.trim() && value && !value.startsWith("0")
+      )
+    ) {
       toast({
         duration: 8000,
         variant: "destructive",
-        title: "Uh oh, something went wrong!",
+        title: "Uh, something went wrong!",
         description: "All settings fields are required to start the game",
       });
 
       return;
     }
 
-    const players = playersData.map(p => ({ ...p, id: nanoid() }));
+    const players = playersData.map(p => ({
+      id: nanoid(),
+      name: p.name.trim(),
+      value: parseInt(p.value),
+    }));
+
     setPlayers(players);
-    router.push(`/${players[0].id}`);
+    router.push(`/game/${players[0].id}`);
   };
 
   return (
@@ -108,9 +121,17 @@ export default function CardCustomize() {
           </div>
           {numberOfPlayers ? (
             <div className="flex flex-col gap-[20px]">
+              <div>
+                <CardDescription>
+                  * Name can only contain basic letters of the Latin alphabet
+                </CardDescription>
+                <CardDescription>
+                  * Value can only contain digits and cannot start with 0
+                </CardDescription>
+              </div>
               {playersData.map(({ name, value }, i) => (
                 <div className="flex flex-col gap-[6px]" key={i}>
-                  <h3 className="text-lg mb-[4px]">Player {i + 1}</h3>
+                  <p className="text-lg mb-[4px]">Bettor {i + 1}</p>
                   <Label htmlFor={`player-${i}-name`}>Name</Label>
                   <Input
                     type="text"
@@ -118,23 +139,28 @@ export default function CardCustomize() {
                     name="name"
                     value={name}
                     placeholder="Nickname"
-                    autoComplete="on"
-                    onChange={e =>
-                      handlePlayerChange(i, e.target.name, e.target.value)
-                    }
+                    maxLength={15}
+                    autoComplete="off"
+                    onChange={e => {
+                      const value = e.target.value;
+                      if (value !== "" && !/^[a-z]+$/i.test(value)) return;
+                      handlePlayerChange(i, e.target.name, value);
+                    }}
                   />
-                  <Label htmlFor={`player-${i}-value`}>Value</Label>
+                  <Label htmlFor={`player-${i}-value`}>Balance</Label>
                   <Input
-                    type="number"
+                    type="text"
                     id={`player-${i}-value`}
                     name="value"
                     value={value}
-                    min={1}
-                    placeholder="100"
-                    autoComplete="on"
-                    onChange={e =>
-                      handlePlayerChange(i, e.target.name, e.target.value)
-                    }
+                    placeholder="Initial balance"
+                    maxLength={10}
+                    autoComplete="off"
+                    onChange={e => {
+                      const value = e.target.value;
+                      if (value !== "" && !/^\d+$/.test(value)) return;
+                      handlePlayerChange(i, e.target.name, value);
+                    }}
                   />
                 </div>
               ))}
