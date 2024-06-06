@@ -36,24 +36,24 @@ interface ColorEffect {
 }
 
 export const colorEffects: Record<Color, ColorEffect> = {
-  crimson: { value: 0, operation: null }, // Set money to 0
-  green: { value: 10, operation: MATH_OPERATIONS.Multiplication }, // Multiply money by 10
-  hotpink: { value: 2, operation: MATH_OPERATIONS.Division }, // Divide money by 2
-  blue: { value: 500, operation: MATH_OPERATIONS.Addition }, // Add 500 to money
-  khaki: { value: 200, operation: MATH_OPERATIONS.Subtraction }, // Subtract 200 from money
-  darkorange: { value: 5, operation: MATH_OPERATIONS.Multiplication }, // Multiply money by 5
-  lightcoral: { value: 300, operation: MATH_OPERATIONS.Addition }, // Add 300 to money
-  skyblue: { value: 4, operation: MATH_OPERATIONS.Multiplication }, // Multiply money by 4
-  turquoise: { value: 3, operation: MATH_OPERATIONS.Division }, // Divide money by 3
-  indigo: { value: 400, operation: MATH_OPERATIONS.Subtraction }, // Subtract 400 from money
-  darkcyan: { value: 1000, operation: MATH_OPERATIONS.Addition }, // Add 1000 to money
-  darkslategray: { value: 750, operation: MATH_OPERATIONS.Addition }, // Add 750 to money
-  saddlebrown: { value: 100, operation: MATH_OPERATIONS.Subtraction }, // Subtract 100 from money
-  blueviolet: { value: 3, operation: MATH_OPERATIONS.Multiplication }, // Multiply money by 8
-  peachpuff: { value: 600, operation: MATH_OPERATIONS.Addition }, // Add 600 to money
-  plum: { value: 2, operation: MATH_OPERATIONS.Multiplication }, // Multiply money by 2
-  olive: { value: 50, operation: MATH_OPERATIONS.Subtraction }, // Subtract 50 from money
-  purple: { value: 10, operation: MATH_OPERATIONS.Division }, // Divide money by 10
-  goldenrod: { value: 2000, operation: MATH_OPERATIONS.Addition }, // Add 2000 to money
-  midnightblue: { value: 5, operation: MATH_OPERATIONS.Division }, // Divide money by 5
+  crimson: { value: 0, operation: null },
+  green: { value: 10, operation: MATH_OPERATIONS.Multiplication },
+  hotpink: { value: 2, operation: MATH_OPERATIONS.Division },
+  blue: { value: 9000, operation: MATH_OPERATIONS.Subtraction },
+  khaki: { value: 1500, operation: MATH_OPERATIONS.Subtraction },
+  darkorange: { value: 5, operation: MATH_OPERATIONS.Multiplication },
+  lightcoral: { value: 8, operation: MATH_OPERATIONS.Multiplication },
+  skyblue: { value: 4, operation: MATH_OPERATIONS.Multiplication },
+  turquoise: { value: 3, operation: MATH_OPERATIONS.Division },
+  indigo: { value: 4000, operation: MATH_OPERATIONS.Subtraction },
+  darkcyan: { value: 4, operation: MATH_OPERATIONS.Division },
+  darkslategray: { value: 75, operation: MATH_OPERATIONS.Addition },
+  saddlebrown: { value: 7000, operation: MATH_OPERATIONS.Subtraction },
+  blueviolet: { value: 3, operation: MATH_OPERATIONS.Multiplication },
+  peachpuff: { value: 6000, operation: MATH_OPERATIONS.Addition },
+  plum: { value: 2, operation: MATH_OPERATIONS.Multiplication },
+  olive: { value: 50, operation: MATH_OPERATIONS.Subtraction },
+  purple: { value: 10, operation: MATH_OPERATIONS.Division },
+  goldenrod: { value: 2000, operation: MATH_OPERATIONS.Addition },
+  midnightblue: { value: 5, operation: MATH_OPERATIONS.Division },
 };

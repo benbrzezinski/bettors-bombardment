@@ -1,12 +1,7 @@
+import { create } from "zustand";
 import { MATH_OPERATIONS } from "@/data/color-effects";
 import { calculate } from "@/lib/utils";
-import { create } from "zustand";
-
-interface Player {
-  id: string;
-  name: string;
-  value: number;
-}
+import { Player } from "@/types";
 
 interface State {
   players: Player[];
@@ -20,7 +15,7 @@ interface State {
     colorEffectValue: number,
     operation: MATH_OPERATIONS | null
   ) => void;
-  removePlayer: (id: string) => void;
+  deletePlayer: (id: string) => void;
   setNumberOfPlayers: (n: number) => void;
   setAmountOfRounds: (n: number) => void;
   nextRound: () => void;
@@ -28,10 +23,7 @@ interface State {
 }
 
 const initialState = {
-  players: [
-    // { id: "1", name: "ben", value: 1000 },
-    // { id: "2", name: "sara", value: 1001 },
-  ],
+  players: [],
   numberOfPlayers: 0,
   amountOfRounds: 0,
   currentRound: 0,
@@ -39,20 +31,27 @@ const initialState = {
 
 const useStore = create<State>(set => ({
   ...initialState,
-  setPlayers: p => set({ players: p }),
+  setPlayers: players => set({ players }),
   updatePlayer: (id, betValue, colorEffectValue, operation) =>
     set(state => {
       const updatedPlayers = [...state.players];
       const player = updatedPlayers.find(p => p.id === id);
 
       if (player) {
-        const newValue = calculate(betValue, colorEffectValue, operation);
-        player.value += Math.round(newValue);
+        if (operation) {
+          const newValue = calculate(betValue, colorEffectValue, operation);
+
+          newValue < 0
+            ? (player.value += 0 - betValue)
+            : (player.value += Math.round(newValue) - betValue);
+        } else {
+          player.value = 0;
+        }
       }
 
       return { players: updatedPlayers };
     }),
-  removePlayer: id =>
+  deletePlayer: id =>
     set(state => {
       const updatedPlayers = state.players.filter(p => p.id !== id);
       return { players: updatedPlayers };

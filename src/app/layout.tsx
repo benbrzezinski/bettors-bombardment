@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="min-h-dvh flex justify-center items-center py-[30px] px-[15px] container antialiased">
+        <main className="min-h-dvh flex justify-center items-center py-[50px] px-[15px] container antialiased relative">
           {children}
         </main>
         <Toaster />

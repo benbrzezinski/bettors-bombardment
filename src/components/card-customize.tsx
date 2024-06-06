@@ -58,18 +58,26 @@ export default function CardCustomize() {
   };
 
   const startGame = () => {
+    const playerNames = playersData.map(({ name }) =>
+      name.toLocaleLowerCase().trim()
+    );
+
+    const uniquePlayerNames = Array.from(new Set(playerNames));
+
     if (
       !numberOfPlayers ||
       !amountOfRounds ||
       !playersData.every(
         ({ name, value }) => name.trim() && value && !value.startsWith("0")
-      )
+      ) ||
+      playerNames.length !== uniquePlayerNames.length
     ) {
       toast({
         duration: 8000,
         variant: "destructive",
         title: "Uh, something went wrong!",
-        description: "All settings fields are required to start the game",
+        description:
+          "To start the game, all settings fields are required and must meet all the above conditions (*).",
       });
 
       return;
@@ -99,6 +107,11 @@ export default function CardCustomize() {
             <Label htmlFor="players">Number of players</Label>
             <Select
               name="numberOfPlayers"
+              value={
+                numberOfPlayers.toString() === "0"
+                  ? undefined
+                  : numberOfPlayers.toString()
+              }
               onValueChange={value => {
                 setNumberOfPlayers(parseInt(value));
               }}
@@ -123,10 +136,14 @@ export default function CardCustomize() {
             <div className="flex flex-col gap-[20px]">
               <div>
                 <CardDescription>
-                  * Name can only contain basic letters of the Latin alphabet
+                  * Player names must be unique, regardless of case sensitive.
                 </CardDescription>
                 <CardDescription>
-                  * Value can only contain digits and cannot start with 0
+                  * Name can only contain basic letters [A-Z].
+                </CardDescription>
+                <CardDescription>
+                  * Value can only contain digits and must be a positive
+                  integer.
                 </CardDescription>
               </div>
               {playersData.map(({ name, value }, i) => (
@@ -143,7 +160,7 @@ export default function CardCustomize() {
                     autoComplete="off"
                     onChange={e => {
                       const value = e.target.value;
-                      if (value !== "" && !/^[a-z]+$/i.test(value)) return;
+                      if (value !== "" && !/^[a-z\s]+$/i.test(value)) return;
                       handlePlayerChange(i, e.target.name, value);
                     }}
                   />
@@ -154,7 +171,7 @@ export default function CardCustomize() {
                     name="value"
                     value={value}
                     placeholder="Initial balance"
-                    maxLength={10}
+                    maxLength={7}
                     autoComplete="off"
                     onChange={e => {
                       const value = e.target.value;
@@ -170,6 +187,11 @@ export default function CardCustomize() {
             <Label htmlFor="rounds">Amount of rounds</Label>
             <Select
               name="amountOfRounds"
+              value={
+                amountOfRounds.toString() === "0"
+                  ? undefined
+                  : amountOfRounds.toString()
+              }
               onValueChange={value => {
                 setAmountOfRounds(parseInt(value));
               }}
@@ -192,7 +214,7 @@ export default function CardCustomize() {
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <Button onClick={startGame}>Start the game</Button>
+        <Button onClick={startGame}>Start the Game</Button>
       </CardFooter>
     </Card>
   );

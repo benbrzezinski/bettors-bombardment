@@ -46,4 +46,9 @@
   button {
     user-select: none;
   }
+
+  div[role="alertdialog"] {
+    width: 95%;
+    border-radius: 8px;
+  }
 }

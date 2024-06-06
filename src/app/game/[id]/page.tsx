@@ -1,10 +1,21 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useState } from "react";
+import { MouseEvent, useEffect, useState, useRef } from "react";
 import Lottie from "lottie-react";
 import useStore from "@/store";
 import useColorEffects from "@/hooks/use-color-effects";
@@ -12,6 +23,7 @@ import { type Color, colorEffects } from "@/data/color-effects";
 import { cn } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
 import notFound from "@/lotties/not-found.json";
+import { Player } from "@/types";
 
 interface GameDetailsProps {
   params: {
@@ -29,17 +41,18 @@ export default function GameDetails({ params }: GameDetailsProps) {
     currentRound,
     nextRound,
     updatePlayer,
-    removePlayer,
+    deletePlayer,
     resetStore,
   } = useStore();
   const { magicColors, generateRandomColors } = useColorEffects();
   const router = useRouter();
+  const alertBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const nextPlayerExists = () => {
-    const index = players.findIndex(p => p.id === params.id);
+    const i = players.findIndex(p => p.id === params.id);
 
-    if (index !== -1) {
-      return players[index + 1];
+    if (i !== -1) {
+      return players[i + 1];
     }
   };
 
@@ -52,41 +65,31 @@ export default function GameDetails({ params }: GameDetailsProps) {
   }, [generateRandomColors]);
 
   useEffect(() => {
-    if (player && player.value <= 0) {
-      removePlayer(player.id);
-
-      nextPlayer
-        ? router.replace(`/game/${nextPlayer.id}`)
-        : amountOfRounds > round && players.length > 1
-        ? router.replace(`/game/${players[0].id}`)
-        : router.replace("/results");
+    if (player && player.value <= 0 && alertBtnRef.current) {
+      alertBtnRef.current.click();
     }
-  }, [
-    player,
-    player?.value,
-    removePlayer,
-    nextPlayer,
-    router,
-    amountOfRounds,
-    round,
-    players,
-  ]);
+  }, [player, player?.value]);
 
-  const submittingBet = () => {
+  const getBalanceInRealTime = (playerValue: number) => {
+    if (betValue.startsWith("0")) return `${playerValue}$`;
+    const balance = playerValue - Number(betValue);
+    return balance < 0 ? "Too much bet" : `${balance}$`;
+  };
+
+  const submittingBet = (playerValue: number) => {
     const betValueParsed = parseInt(betValue);
 
     if (
+      betValue.startsWith("0") ||
       isNaN(betValueParsed) ||
-      betValueParsed > player!.value ||
+      betValueParsed > playerValue ||
       betValueParsed < 1
     ) {
       toast({
         duration: 10000,
         variant: "destructive",
         title: "Uh, something went wrong!",
-        description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${
-          player!.value
-        }$`,
+        description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${playerValue}$`,
       });
 
       return;
@@ -101,30 +104,29 @@ export default function GameDetails({ params }: GameDetailsProps) {
   };
 
   const selectingField =
-    (color: Color) => (e: MouseEvent<HTMLButtonElement>) => {
+    (currentPlayer: Player, color: Color) =>
+    (e: MouseEvent<HTMLButtonElement>) => {
       if (betMade) return;
 
       const betValueParsed = parseInt(betValue);
 
       if (
         isNaN(betValueParsed) ||
-        betValueParsed > player!.value ||
+        betValueParsed > currentPlayer.value ||
         betValueParsed < 1
       ) {
         toast({
           duration: 10000,
           variant: "destructive",
           title: "Uh, something went wrong!",
-          description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${
-            player!.value
-          }$`,
+          description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${currentPlayer.value}$`,
         });
 
         return;
       }
 
       const btn = e.currentTarget;
-      const btnStyles = `border:none; color:black; font-size:13px; font-weight:700; background-color:${color}; transform:scale(1.2);`;
+      const btnStyles = `border:none; color:black; font-size:13px; font-weight:700; background-color:${color}; box-shadow: 0px 0px 10px 0px ${color}; transform:scale(1.2);`;
       const colorEffect = colorEffects[color];
 
       btn.setAttribute("style", btnStyles);
@@ -132,25 +134,32 @@ export default function GameDetails({ params }: GameDetailsProps) {
 
       setBetMade(true);
       updatePlayer(
-        player!.id,
+        currentPlayer.id,
         betValueParsed,
         colorEffect.value,
         colorEffect.operation
       );
+      setBetValue("");
     };
+
+  const restartGame = () => {
+    resetStore();
+    router.replace("/");
+  };
 
   return player ? (
     <div className="flex flex-col items-center gap-[50px]">
       <p className="font-bold text-4xl">Round {round}</p>
       <div className="text-2xl text-center select-none">
         <p>Bettor: {player.name}</p>
-        <p>Balance: {player.value}$</p>
+        <p>Balance: {getBalanceInRealTime(player.value)}</p>
       </div>
       <div className="flex items-center gap-[10px] w-full max-w-[500px]">
         <Input
           name="bet-value"
           type="text"
           placeholder="Value to bet"
+          maxLength={7}
           value={betValue}
           disabled={betSubmitted || betMade}
           onChange={e => {
@@ -162,7 +171,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
         <Button
           variant="secondary"
           disabled={betSubmitted || betMade}
-          onClick={submittingBet}
+          onClick={() => submittingBet(player.value)}
         >
           Submit
         </Button>
@@ -184,9 +193,9 @@ export default function GameDetails({ params }: GameDetailsProps) {
           {magicColors.map((color, i) => (
             <li key={i} className="w-[50px] aspect-square">
               <button
-                className="size-full border p-[2px] border-white rounded-md grid place-items-center cursor-pointer transition-[transform,background-color] hover:bg-secondary"
+                className="size-full border border-white rounded-md grid place-items-center cursor-pointer transition-[transform,background-color] hover:bg-secondary"
                 type="button"
-                onClick={selectingField(color)}
+                onClick={selectingField(player, color)}
               >
                 {i + 1}
               </button>
@@ -218,6 +227,39 @@ export default function GameDetails({ params }: GameDetailsProps) {
           See Results
         </Button>
       )}
+      <AlertDialog>
+        <AlertDialogTrigger
+          className="absolute"
+          ref={alertBtnRef}
+        ></AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-destructive text-2xl">
+              You have just lost!
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Your balance has been cleared. You have been removed from the game
+              and you can no longer participate in this game, continue by
+              clicking the button below.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction
+              onClick={() => {
+                deletePlayer(player.id);
+
+                nextPlayer
+                  ? router.replace(`/game/${nextPlayer.id}`)
+                  : amountOfRounds > round && players.length > 1
+                  ? router.replace(`/game/${players[0].id}`)
+                  : router.replace("/results");
+              }}
+            >
+              <ChevronRight />
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   ) : (
     <div className="flex flex-col items-center gap-[10px]">
@@ -232,14 +274,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
         />
         <Skeleton className="size-[250px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full" />
       </div>
-      <Button
-        onClick={() => {
-          resetStore();
-          router.replace("/");
-        }}
-      >
-        Restart
-      </Button>
+      <Button onClick={restartGame}>Restart</Button>
     </div>
   );
 }
