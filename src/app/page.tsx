@@ -1,4 +1,5 @@
 import CardCustomize from "@/components/card-customize";
+import CardInstructions from "@/components/card-instructions";
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
         Bettors Bombardment
       </h1>
       <CardCustomize />
+      <CardInstructions />
     </div>
   );
 }

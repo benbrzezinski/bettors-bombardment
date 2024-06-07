@@ -14,11 +14,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
 import useStore from "@/store";
 
 export default function QuitBtn() {
   const { resetStore } = useStore();
   const router = useRouter();
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 639px)" });
 
   const quitGame = () => {
     resetStore();
@@ -30,10 +32,10 @@ export default function QuitBtn() {
       <AlertDialogTrigger asChild>
         <Button
           variant="destructive"
-          className="absolute top-[50px] right-[15px]"
+          className="absolute top-[10px] right-[10px] sm:top-[15px] sm:right-[15px]"
         >
-          <LogOut className="mr-[10px]" />
-          Quit
+          <LogOut className="sm:mr-[10px]" />
+          {isSmallScreen ? "" : "Quit"}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

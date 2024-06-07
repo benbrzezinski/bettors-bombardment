@@ -95,9 +95,9 @@ export default function CardCustomize() {
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle className="text-center">Customize Your Game</CardTitle>
-        <CardDescription className="text-center">
+      <CardHeader className="items-center">
+        <CardTitle>Customize Your Game</CardTitle>
+        <CardDescription>
           Set the desired settings in one-moment.
         </CardDescription>
       </CardHeader>

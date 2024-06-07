@@ -27,25 +27,41 @@ interface PlayersWithOptionalTies {
   players: Player[];
 }
 
-export const groupPlayersIfTheyAreTied = (players: Player[]) => {
-  let result: PlayersWithOptionalTies[] = [];
+export const groupPlayersIfTheyAreTied = (sortedPlayers: Player[]) => {
+  const result: PlayersWithOptionalTies[] = [];
+  let currentGroup: PlayersWithOptionalTies | null = null;
 
-  for (let i = 0; i < players.length; i++) {
-    const currentPlayer = players[i];
-    const previousPlayer = players[i - 1];
+  for (let i = 0; i < sortedPlayers.length; i++) {
+    const currentPlayer = sortedPlayers[i];
+    const previousPlayer = sortedPlayers[i - 1];
 
     if (
       currentPlayer &&
       previousPlayer &&
-      currentPlayer.value === previousPlayer.value
+      currentPlayer.value === previousPlayer.value &&
+      currentGroup
     ) {
-      result[i - 1].players.push(currentPlayer);
-    }
+      currentGroup.players.push({ ...currentPlayer, value: 0 });
+    } else {
+      if (currentGroup) {
+        result.push(currentGroup);
+      }
 
-    if (currentPlayer && currentPlayer.value !== previousPlayer?.value) {
-      result[result.length] = { players: [currentPlayer] };
+      currentGroup = { players: [{ ...currentPlayer }] };
     }
   }
 
+  if (currentGroup) {
+    result.push(currentGroup);
+  }
+
   return result;
+};
+
+export const covertLargerNumberIntoSimplerForm = (n: number) => {
+  if (n >= 1000) {
+    return `${n / 1000}K`;
+  }
+
+  return n;
 };

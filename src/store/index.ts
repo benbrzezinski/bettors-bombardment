@@ -23,10 +23,10 @@ interface State {
 }
 
 const initialState = {
-  players: [],
+  players: [] as Player[],
   numberOfPlayers: 0,
   amountOfRounds: 0,
-  currentRound: 0,
+  currentRound: 1,
 };
 
 const useStore = create<State>(set => ({

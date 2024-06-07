@@ -10,6 +10,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,10 +25,10 @@ import Lottie from "lottie-react";
 import useStore from "@/store";
 import useColorEffects from "@/hooks/use-color-effects";
 import { type Color, colorEffects } from "@/data/color-effects";
-import { cn } from "@/lib/utils";
+import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
-import notFound from "@/lotties/not-found.json";
 import { Player } from "@/types";
+import notFound from "@/lotties/not-found.json";
 
 interface GameDetailsProps {
   params: {
@@ -57,7 +62,6 @@ export default function GameDetails({ params }: GameDetailsProps) {
   };
 
   const player = players.find(p => p.id === params.id);
-  const round = currentRound + 1;
   const nextPlayer = nextPlayerExists();
 
   useEffect(() => {
@@ -111,6 +115,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
       const betValueParsed = parseInt(betValue);
 
       if (
+        !betSubmitted ||
         isNaN(betValueParsed) ||
         betValueParsed > currentPlayer.value ||
         betValueParsed < 1
@@ -119,25 +124,29 @@ export default function GameDetails({ params }: GameDetailsProps) {
           duration: 10000,
           variant: "destructive",
           title: "Uh, something went wrong!",
-          description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${currentPlayer.value}$`,
+          description: `Submit the amount you want to bet, remember that the bet value must be within the range of your balance: ${currentPlayer.value}$`,
         });
 
         return;
       }
 
       const btn = e.currentTarget;
-      const btnStyles = `border:none; color:black; font-size:13px; font-weight:700; background-color:${color}; box-shadow: 0px 0px 10px 0px ${color}; transform:scale(1.2);`;
+      const btnStyles = `border:none; color:black; font-size:14px; font-weight:700; background-color:${color}; box-shadow: 0px 0px 10px 0px ${color}; transform:scale(1.2);`;
       const colorEffect = colorEffects[color];
+      const valueWithMultiplier = colorEffect.value * currentRound;
+      const operation = colorEffect.operation;
 
       btn.setAttribute("style", btnStyles);
-      btn.innerText = `${colorEffect.operation ?? ""}${colorEffect.value}`;
+      btn.innerText = `${
+        colorEffect.operation ?? ""
+      }${covertLargerNumberIntoSimplerForm(valueWithMultiplier)}`;
 
       setBetMade(true);
       updatePlayer(
         currentPlayer.id,
         betValueParsed,
-        colorEffect.value,
-        colorEffect.operation
+        valueWithMultiplier,
+        operation
       );
       setBetValue("");
     };
@@ -149,17 +158,17 @@ export default function GameDetails({ params }: GameDetailsProps) {
 
   return player ? (
     <div className="flex flex-col items-center gap-[50px]">
-      <p className="font-bold text-4xl">Round {round}</p>
-      <div className="text-2xl text-center select-none">
+      <p className="font-bold text-4xl">Round {currentRound}</p>
+      <div className="text-2xl text-center select-none break-all">
         <p>Bettor: {player.name}</p>
         <p>Balance: {getBalanceInRealTime(player.value)}</p>
       </div>
-      <div className="flex items-center gap-[10px] w-full max-w-[500px]">
+      <div className="flex flex-col items-center gap-[15px] w-full">
         <Input
           name="bet-value"
           type="text"
           placeholder="Value to bet"
-          maxLength={7}
+          className="max-w-[500px]"
           value={betValue}
           disabled={betSubmitted || betMade}
           onChange={e => {
@@ -168,40 +177,65 @@ export default function GameDetails({ params }: GameDetailsProps) {
             setBetValue(value);
           }}
         />
-        <Button
-          variant="secondary"
-          disabled={betSubmitted || betMade}
-          onClick={() => submittingBet(player.value)}
-        >
-          Submit
-        </Button>
-        <Button
-          variant="outline"
-          disabled={!betSubmitted || betMade}
-          onClick={resettingBet}
-        >
-          Reset
-        </Button>
+        <div className="flex items-center gap-[10px]">
+          <Button
+            variant="secondary"
+            disabled={betSubmitted || betMade}
+            onClick={() => submittingBet(player.value)}
+          >
+            Submit
+          </Button>
+          <Button
+            variant="secondary"
+            disabled={betSubmitted || betMade}
+            onClick={() => setBetValue(player.value.toString())}
+          >
+            Max
+          </Button>
+          <Button
+            variant="outline"
+            disabled={!betSubmitted || betMade}
+            onClick={resettingBet}
+          >
+            Reset
+          </Button>
+        </div>
       </div>
       {magicColors.length > 0 ? (
-        <ul
-          className={cn(
-            "grid grid-cols-5 sm:grid-cols-10 place-items-center gap-[10px] select-none",
-            betMade && "pointer-events-none"
-          )}
-        >
-          {magicColors.map((color, i) => (
-            <li key={i} className="w-[50px] aspect-square">
-              <button
-                className="size-full border border-white rounded-md grid place-items-center cursor-pointer transition-[transform,background-color] hover:bg-secondary"
-                type="button"
-                onClick={selectingField(player, color)}
+        <div className="relative">
+          <HoverCard openDelay={150}>
+            <HoverCardTrigger asChild>
+              <p
+                className="absolute top-[-45px] right-[-15px] md:right-[-42px] text-3xl font-bold text-red-700 cursor-pointer"
+                tabIndex={0}
               >
-                {i + 1}
-              </button>
-            </li>
-          ))}
-        </ul>
+                x{currentRound}
+              </p>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              Multiplier that applies to all drawn numbers in this round.
+            </HoverCardContent>
+          </HoverCard>
+          <div className="absolute top-[-8px] right-[-8px] size-[50px] border-t-2 border-r-2 border-red-700 rounded-tr-md pointer-events-none"></div>
+          <ul
+            className={cn(
+              "grid grid-cols-5 sm:grid-cols-10 place-items-center gap-[10px] select-none",
+              betMade && "pointer-events-none"
+            )}
+          >
+            {magicColors.map((color, i) => (
+              <li key={i} className="size-[50px]">
+                <button
+                  className="size-full border border-white rounded-md grid place-items-center cursor-pointer transition-[transform,background-color] hover:bg-secondary"
+                  type="button"
+                  onClick={selectingField(player, color)}
+                >
+                  {i + 1}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : (
         <Skeleton className="w-[290px] h-[1190px] sm:size-[590px] rounded-md" />
       )}
@@ -212,7 +246,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
         >
           Next Bettor
         </Button>
-      ) : amountOfRounds > round && players.length > 1 ? (
+      ) : amountOfRounds > currentRound && players.length > 1 ? (
         <Button
           disabled={!betMade}
           onClick={() => {
@@ -250,7 +284,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
 
                 nextPlayer
                   ? router.replace(`/game/${nextPlayer.id}`)
-                  : amountOfRounds > round && players.length > 1
+                  : amountOfRounds > currentRound && players.length > 1
                   ? router.replace(`/game/${players[0].id}`)
                   : router.replace("/results");
               }}
