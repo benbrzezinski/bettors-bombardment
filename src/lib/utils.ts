@@ -1,7 +1,7 @@
 import { MATH_OPERATIONS } from "@/data/color-effects";
-import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Player } from "@/types";
+import { type ClassValue, clsx } from "clsx";
+import { type Player } from "@/store";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));

@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { COLORS, type Color } from "@/data/color-effects";
+import { type Color, COLORS } from "@/data/color-effects";
 
 const useColorEffects = () => {
   const [magicColors, setMagicColors] = useState<Color[]>([]);

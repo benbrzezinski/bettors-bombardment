@@ -25,9 +25,9 @@ import Lottie from "lottie-react";
 import useStore from "@/store";
 import useColorEffects from "@/hooks/use-color-effects";
 import { type Color, colorEffects } from "@/data/color-effects";
+import { type Player } from "@/store";
 import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
 import { toast } from "@/components/ui/use-toast";
-import { Player } from "@/types";
 import notFound from "@/lotties/not-found.json";
 
 interface GameDetailsProps {
@@ -51,7 +51,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
   } = useStore();
   const { magicColors, generateRandomColors } = useColorEffects();
   const router = useRouter();
-  const alertBtnRef = useRef<HTMLButtonElement | null>(null);
+  const alertTriggerBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const nextPlayerExists = () => {
     const i = players.findIndex(p => p.id === params.id);
@@ -69,8 +69,16 @@ export default function GameDetails({ params }: GameDetailsProps) {
   }, [generateRandomColors]);
 
   useEffect(() => {
-    if (player && player.value <= 0 && alertBtnRef.current) {
-      alertBtnRef.current.click();
+    if (player && player.value === 0 && alertTriggerBtnRef.current) {
+      const triggerBtn = alertTriggerBtnRef.current;
+
+      const timeoutID = setTimeout(() => {
+        triggerBtn.click();
+      }, 1500);
+
+      return () => {
+        clearTimeout(timeoutID);
+      };
     }
   }, [player, player?.value]);
 
@@ -209,7 +217,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
                 className="absolute top-[-45px] right-[-15px] md:right-[-42px] text-3xl font-bold text-red-700 cursor-pointer"
                 tabIndex={0}
               >
-                x{currentRound}
+                {currentRound}x
               </p>
             </HoverCardTrigger>
             <HoverCardContent>
@@ -241,14 +249,14 @@ export default function GameDetails({ params }: GameDetailsProps) {
       )}
       {nextPlayer ? (
         <Button
-          disabled={!betMade}
+          disabled={!betMade || player.value === 0}
           onClick={() => router.replace(`/game/${nextPlayer.id}`)}
         >
           Next Bettor
         </Button>
       ) : amountOfRounds > currentRound && players.length > 1 ? (
         <Button
-          disabled={!betMade}
+          disabled={!betMade || player.value === 0}
           onClick={() => {
             nextRound();
             router.replace(`/game/${players[0].id}`);
@@ -257,14 +265,17 @@ export default function GameDetails({ params }: GameDetailsProps) {
           Next Round
         </Button>
       ) : (
-        <Button disabled={!betMade} onClick={() => router.replace("/results")}>
+        <Button
+          disabled={!betMade || player.value === 0}
+          onClick={() => router.replace("/results")}
+        >
           See Results
         </Button>
       )}
       <AlertDialog>
         <AlertDialogTrigger
-          className="absolute"
-          ref={alertBtnRef}
+          className="hidden absolute"
+          ref={alertTriggerBtnRef}
         ></AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

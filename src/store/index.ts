@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { MATH_OPERATIONS } from "@/data/color-effects";
 import { calculate } from "@/lib/utils";
-import { Player } from "@/types";
+
+export interface Player {
+  id: string;
+  name: string;
+  value: number;
+}
 
 interface State {
   players: Player[];
@@ -39,11 +44,15 @@ const useStore = create<State>(set => ({
 
       if (player) {
         if (operation) {
-          const newValue = calculate(betValue, colorEffectValue, operation);
+          const calculatedValue = calculate(
+            betValue,
+            colorEffectValue,
+            operation
+          );
 
-          newValue < 0
-            ? (player.value += 0 - betValue)
-            : (player.value += Math.round(newValue) - betValue);
+          calculatedValue < 0
+            ? (player.value += -betValue)
+            : (player.value += Math.round(calculatedValue) - betValue);
         } else {
           player.value = 0;
         }

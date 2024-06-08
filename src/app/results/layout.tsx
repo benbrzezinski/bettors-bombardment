@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Bettors Bombardment | Results",
 };
 
-export default function RootLayout({
+export default function ResultsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
