@@ -74,7 +74,7 @@ export default function GameDetails({ params }: GameDetailsProps) {
 
       const timeoutID = setTimeout(() => {
         triggerBtn.click();
-      }, 1500);
+      }, 1000);
 
       return () => {
         clearTimeout(timeoutID);
