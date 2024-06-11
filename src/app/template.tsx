@@ -18,7 +18,7 @@ export default function RootTemplate({
       >
         {children}
       </motion.div>
-      {pathname.includes("game") && <QuitBtn />}
+      {pathname.includes("gameplay") && <QuitBtn />}
     </>
   );
 }

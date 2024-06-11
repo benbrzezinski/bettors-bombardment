@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Bettors Bombardment | Game",
+  title: "Bettors Bombardment | Gameplay",
 };
 
-export default function GameDetailsLayout({
+export default function GameplayDetailsLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

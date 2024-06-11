@@ -1,32 +1,11 @@
+import { COLORS } from "@/constants";
+
 export enum MATH_OPERATIONS {
   Addition = "+",
   Subtraction = "-",
   Multiplication = "*",
   Division = "/",
 }
-
-export const COLORS = [
-  "crimson",
-  "green",
-  "hotpink",
-  "darkorange",
-  "khaki",
-  "blueviolet",
-  "indigo",
-  "darkcyan",
-  "skyblue",
-  "blue",
-  "saddlebrown",
-  "goldenrod",
-  "darkslategray",
-  "turquoise",
-  "olive",
-  "peachpuff",
-  "plum",
-  "purple",
-  "midnightblue",
-  "lightcoral",
-] as const;
 
 export type Color = (typeof COLORS)[number];
 

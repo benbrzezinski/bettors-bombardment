@@ -22,13 +22,13 @@ export default function CardInstructions() {
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
+          <AccordionItem value="objective">
             <AccordionTrigger>What is the objective?</AccordionTrigger>
             <AccordionContent>
               Increase your balance by placing bets and selecting hidden fields.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2">
+          <AccordionItem value="gameplay">
             <AccordionTrigger>What is the gameplay like?</AccordionTrigger>
             <AccordionContent>
               <ul className="flex flex-col gap-[10px] list-disc pl-[16px]">
@@ -44,13 +44,13 @@ export default function CardInstructions() {
               </ul>
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3">
+          <AccordionItem value="win">
             <AccordionTrigger>Who wins?</AccordionTrigger>
             <AccordionContent>
               The player with the highest balance at the end wins.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-4">
+          <AccordionItem value="lose">
             <AccordionTrigger>How can you lose?</AccordionTrigger>
             <AccordionContent>
               If your balance drops to zero, you are out of the game.

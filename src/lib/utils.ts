@@ -1,7 +1,7 @@
 import { MATH_OPERATIONS } from "@/data/color-effects";
 import { twMerge } from "tailwind-merge";
 import { type ClassValue, clsx } from "clsx";
-import { type Player } from "@/store";
+import type { Player } from "@/store";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
@@ -23,7 +23,7 @@ export const calculate = (a: number, b: number, operation: MATH_OPERATIONS) => {
   }
 };
 
-interface PlayersWithOptionalTies {
+export interface PlayersWithOptionalTies {
   players: Player[];
 }
 

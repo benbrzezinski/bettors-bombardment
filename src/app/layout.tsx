@@ -9,7 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Bettors Bombardment",
-  description: "Fun Local Game",
+  description: "Fun local game to play with your friends.",
 };
 
 export default function RootLayout({
