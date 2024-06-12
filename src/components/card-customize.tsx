@@ -16,7 +16,14 @@ import { toast } from "@/components/ui/use-toast";
 import SelectNumberOfPlayers from "@/components/select-number-of-players";
 import PlayersData from "@/components/players-data";
 import SelectAmountOfRounds from "@/components/select-amount-of-rounds";
+import SelectGameMode from "@/components/select-game-mode";
 import useStore from "@/store";
+import {
+  GAME_MODES,
+  ABILITIES,
+  type GameMode,
+  type NumberOfPlayers,
+} from "@/constants";
 
 export interface PlayerData {
   name: string;
@@ -24,8 +31,12 @@ export interface PlayerData {
 }
 
 export default function CardCustomize() {
+  const [numberOfPlayers, setNumberOfPlayers] = useState<0 | NumberOfPlayers>(
+    0
+  );
   const [playersData, setPlayersData] = useState<PlayerData[]>([]);
-  const { numberOfPlayers, amountOfRounds, setPlayers } = useStore();
+  const [gameMode, setGameMode] = useState<GameMode>(GAME_MODES[0]);
+  const { amountOfRounds, setPlayers } = useStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -63,14 +74,22 @@ export default function CardCustomize() {
       return;
     }
 
-    const players = playersData.map(p => ({
-      id: nanoid(),
-      name: p.name.trim(),
-      value: parseInt(p.value),
-    }));
+    const players =
+      gameMode === GAME_MODES[0]
+        ? playersData.map(p => ({
+            id: nanoid(),
+            name: p.name.trim(),
+            value: parseInt(p.value),
+          }))
+        : playersData.map(p => ({
+            id: nanoid(),
+            name: p.name.trim(),
+            value: parseInt(p.value),
+            abilities: [...ABILITIES],
+          }));
 
     setPlayers(players);
-    router.push(`/gameplay/${players[0].id}`);
+    router.replace(`/gameplay/${players[0].id}`);
   };
 
   return (
@@ -83,12 +102,17 @@ export default function CardCustomize() {
       </CardHeader>
       <CardContent>
         <div className="grid w-full items-center gap-[30px]">
-          <SelectNumberOfPlayers />
+          <SelectNumberOfPlayers
+            numberOfPlayers={numberOfPlayers}
+            setNumberOfPlayers={setNumberOfPlayers}
+          />
           <PlayersData
+            numberOfPlayers={numberOfPlayers}
             playersData={playersData}
             setPlayersData={setPlayersData}
           />
           <SelectAmountOfRounds />
+          <SelectGameMode gameMode={gameMode} setGameMode={setGameMode} />
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">

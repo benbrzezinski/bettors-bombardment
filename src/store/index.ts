@@ -1,35 +1,40 @@
 import { create } from "zustand";
 import { MATH_OPERATIONS } from "@/data/color-effects";
-import { calculate } from "@/lib/utils";
+import type { Ability, AmountOfRounds } from "@/constants";
+import { calculateBalance } from "@/lib/utils";
 
 export interface Player {
   id: string;
   name: string;
   value: number;
+  abilities?: Ability[];
+}
+
+interface InitialState {
+  players: Player[];
+  amountOfRounds: 0 | AmountOfRounds;
+  currentRound: number;
 }
 
 interface State {
   players: Player[];
-  numberOfPlayers: number;
-  amountOfRounds: number;
+  amountOfRounds: 0 | AmountOfRounds;
   currentRound: number;
-  setPlayers: (p: Player[]) => void;
-  updatePlayer: (
+  setPlayers: (players: Player[]) => void;
+  updatePlayerBalance: (
     id: string,
     betValue: number,
-    colorEffectValue: number,
+    effectValue: number,
     operation: MATH_OPERATIONS | null
   ) => void;
   deletePlayer: (id: string) => void;
-  setNumberOfPlayers: (n: number) => void;
-  setAmountOfRounds: (n: number) => void;
+  setAmountOfRounds: (n: AmountOfRounds) => void;
   nextRound: () => void;
   resetStore: () => void;
 }
 
-const initialState = {
-  players: [] as Player[],
-  numberOfPlayers: 0,
+const initialState: InitialState = {
+  players: [],
   amountOfRounds: 0,
   currentRound: 1,
 };
@@ -37,16 +42,16 @@ const initialState = {
 const useStore = create<State>(set => ({
   ...initialState,
   setPlayers: players => set({ players }),
-  updatePlayer: (id, betValue, colorEffectValue, operation) =>
+  updatePlayerBalance: (id, betValue, effectValue, operation) =>
     set(state => {
       const updatedPlayers = [...state.players];
       const player = updatedPlayers.find(p => p.id === id);
 
       if (player) {
         if (operation) {
-          const calculatedValue = calculate(
+          const calculatedValue = calculateBalance(
             betValue,
-            colorEffectValue,
+            effectValue,
             operation
           );
 
@@ -65,7 +70,6 @@ const useStore = create<State>(set => ({
       const updatedPlayers = state.players.filter(p => p.id !== id);
       return { players: updatedPlayers };
     }),
-  setNumberOfPlayers: n => set({ numberOfPlayers: n }),
   setAmountOfRounds: n => set({ amountOfRounds: n }),
   nextRound: () => set(state => ({ currentRound: state.currentRound + 1 })),
   resetStore: () => set(initialState),

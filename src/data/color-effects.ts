@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants";
+import type { Color } from "@/constants";
 
 export enum MATH_OPERATIONS {
   Addition = "+",
@@ -6,8 +6,6 @@ export enum MATH_OPERATIONS {
   Multiplication = "*",
   Division = "/",
 }
-
-export type Color = (typeof COLORS)[number];
 
 interface ColorEffect {
   value: number;

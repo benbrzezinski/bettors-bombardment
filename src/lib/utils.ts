@@ -7,19 +7,23 @@ export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
-export const calculate = (a: number, b: number, operation: MATH_OPERATIONS) => {
+export const calculateBalance = (
+  betValue: number,
+  effectValue: number,
+  operation: MATH_OPERATIONS
+) => {
   switch (operation) {
     case MATH_OPERATIONS.Addition:
-      return a + b;
+      return betValue + effectValue;
 
     case MATH_OPERATIONS.Subtraction:
-      return a - b;
+      return betValue - effectValue;
 
     case MATH_OPERATIONS.Multiplication:
-      return a * b;
+      return betValue * effectValue;
 
     case MATH_OPERATIONS.Division:
-      return a / b;
+      return betValue / effectValue;
   }
 };
 

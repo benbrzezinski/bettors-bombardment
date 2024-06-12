@@ -3,8 +3,9 @@
 import { Dispatch, MouseEvent, SetStateAction } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
-import { type Color, colorEffects } from "@/data/color-effects";
+import { colorEffects } from "@/data/color-effects";
 import useStore, { type Player } from "@/store";
+import type { Color } from "@/constants";
 
 interface HiddenFieldsProps {
   magicColors: Color[];
@@ -25,7 +26,7 @@ export default function HiddenFields({
   setBetValue,
   setBetMade,
 }: HiddenFieldsProps) {
-  const { currentRound, updatePlayer } = useStore();
+  const { currentRound, updatePlayerBalance } = useStore();
 
   const selectingField =
     (color: Color) => (e: MouseEvent<HTMLButtonElement>) => {
@@ -52,19 +53,19 @@ export default function HiddenFields({
       const btn = e.currentTarget;
       const btnStyles = `border:none; color:black; font-size:14px; font-weight:700; background-color:${color}; box-shadow: 0px 0px 10px 0px ${color}; transform:scale(1.2);`;
       const colorEffect = colorEffects[color];
-      const valueWithMultiplier = colorEffect.value * currentRound;
+      const effectValueWithMultiplier = colorEffect.value * currentRound;
       const operation = colorEffect.operation;
 
       btn.setAttribute("style", btnStyles);
-      btn.innerText = `${
-        colorEffect.operation ?? ""
-      }${covertLargerNumberIntoSimplerForm(valueWithMultiplier)}`;
+      btn.innerText = `${operation ?? ""}${covertLargerNumberIntoSimplerForm(
+        effectValueWithMultiplier
+      )}`;
 
       setBetMade(true);
-      updatePlayer(
+      updatePlayerBalance(
         currentPlayer.id,
         betValueParsed,
-        valueWithMultiplier,
+        effectValueWithMultiplier,
         operation
       );
       setBetValue("");

@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
@@ -48,7 +48,12 @@ export default function QuitBtn() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={quitGame}>Continue</AlertDialogAction>
+          <AlertDialogAction
+            className={buttonVariants({ variant: "destructive" })}
+            onClick={quitGame}
+          >
+            Quit
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

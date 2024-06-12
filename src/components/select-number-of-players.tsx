@@ -8,24 +8,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { NUMBER_OF_PLAYERS } from "@/constants";
-import useStore from "@/store";
+import { Dispatch, SetStateAction } from "react";
+import { NUMBER_OF_PLAYERS, type NumberOfPlayers } from "@/constants";
 
-export default function SelectNumberOfPlayers() {
-  const { numberOfPlayers, setNumberOfPlayers } = useStore();
+interface SelectNumberOfPlayersProps {
+  numberOfPlayers: 0 | NumberOfPlayers;
+  setNumberOfPlayers: Dispatch<SetStateAction<0 | NumberOfPlayers>>;
+}
 
+export default function SelectNumberOfPlayers({
+  numberOfPlayers,
+  setNumberOfPlayers,
+}: SelectNumberOfPlayersProps) {
   return (
     <div className="flex flex-col gap-[6px]">
       <Label htmlFor="players">Number of players</Label>
       <Select
-        name="numberOfPlayers"
-        value={
-          numberOfPlayers.toString() === "0"
-            ? undefined
-            : numberOfPlayers.toString()
-        }
+        name="number-of-players"
+        value={numberOfPlayers === 0 ? undefined : numberOfPlayers.toString()}
         onValueChange={value => {
-          setNumberOfPlayers(parseInt(value));
+          setNumberOfPlayers(parseInt(value) as NumberOfPlayers);
         }}
       >
         <SelectTrigger id="players">

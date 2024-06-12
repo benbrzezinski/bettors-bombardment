@@ -5,19 +5,19 @@ import { CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { PlayerData } from "@/components/card-customize";
-import useStore from "@/store";
+import type { NumberOfPlayers } from "@/constants";
 
 interface PlayersDataProps {
+  numberOfPlayers: 0 | NumberOfPlayers;
   playersData: PlayerData[];
   setPlayersData: Dispatch<SetStateAction<PlayerData[]>>;
 }
 
 export default function PlayersData({
+  numberOfPlayers,
   playersData,
   setPlayersData,
 }: PlayersDataProps) {
-  const { numberOfPlayers } = useStore();
-
   const handlePlayerChange = (index: number, field: string, value: string) => {
     const updatedPlayersData = playersData.map((p, i) =>
       i === index ? { ...p, [field]: value } : p
