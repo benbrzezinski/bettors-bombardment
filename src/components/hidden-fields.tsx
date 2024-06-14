@@ -79,10 +79,10 @@ export default function HiddenFields({
       )}
     >
       {magicColors.map((color, i) => (
-        <li key={i} className="size-[50px]">
+        <li key={i}>
           <button
             type="button"
-            className="size-full border border-white rounded-md grid place-items-center transition-[transform,background-color] hover:bg-secondary"
+            className="size-[50px] border border-white rounded-md grid place-items-center transition-[transform,background-color] hover:bg-secondary focus-visible:bg-secondary"
             onClick={selectingField(color)}
           >
             {i + 1}

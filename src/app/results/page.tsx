@@ -11,7 +11,7 @@ export default function Results() {
 
   const sortedPlayers = [...players].sort((a, b) => b.value - a.value);
   const winners = sortedPlayers.filter(
-    players => players.value === sortedPlayers.at(0)?.value
+    player => player.value === sortedPlayers.at(0)?.value
   );
   const remainingPlayers = groupPlayersIfTheyAreTied(
     sortedPlayers.slice(winners.length)

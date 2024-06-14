@@ -50,7 +50,7 @@ export default function BetValueInput({
   };
 
   return (
-    <div className="flex flex-col items-center gap-[15px] w-full">
+    <div className="w-full flex flex-col items-center gap-[15px]">
       <Input
         name="bet-value"
         type="text"

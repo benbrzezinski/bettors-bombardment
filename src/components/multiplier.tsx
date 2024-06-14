@@ -22,7 +22,7 @@ export default function Multiplier() {
           </p>
         </HoverCardTrigger>
         <HoverCardContent>
-          Multiplier that applies to all drawn numbers in this round.
+          Multiplier that applies to all drawn effects in this round.
         </HoverCardContent>
       </HoverCard>
       <div className="absolute top-[-8px] right-[-8px] size-[50px] border-t-2 border-r-2 border-red-700 rounded-tr-md pointer-events-none"></div>
