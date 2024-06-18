@@ -11,7 +11,7 @@ interface WinnersProps {
 
 export default function Winners({ winners }: WinnersProps) {
   return winners.length > 0 ? (
-    <div className="flex flex-col items-center font-bold text-center">
+    <div className="flex flex-col items-center font-bold text-center cursor-default">
       <p className="text-3xl md:text-4xl">
         {winners.length === 1 ? "Winner" : "Winners"}
       </p>
@@ -23,7 +23,7 @@ export default function Winners({ winners }: WinnersProps) {
         {winners.map(({ id, name }, i) => (
           <p
             className={cn(
-              "text-lg md:text-2xl select-none px-[15px] break-all",
+              "text-lg md:text-2xl px-[15px] break-all",
               i === winners.length - 1 && "border-b border-secondary pb-[15px]"
             )}
             key={id}
@@ -31,13 +31,13 @@ export default function Winners({ winners }: WinnersProps) {
             {name}
           </p>
         ))}
-        <p className="text-lg md:text-2xl select-none border-b border-secondary pt-[20px] px-[15px] pb-[15px] break-all">
+        <p className="text-lg md:text-2xl border-b border-secondary pt-[20px] px-[15px] pb-[15px] break-all">
           {winners[0].value}$
         </p>
       </div>
     </div>
   ) : (
-    <p className="text-3xl md:text-4xl font-bold text-center text-destructive">
+    <p className="text-3xl md:text-4xl font-bold text-center text-destructive cursor-default">
       Everyone lost
     </p>
   );

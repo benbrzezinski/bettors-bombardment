@@ -10,18 +10,20 @@ import {
 } from "@/components/ui/table";
 import type { PlayersWithOptionalTies } from "@/lib/utils";
 
-interface RemainingPlayersProps {
-  remainingPlayers: PlayersWithOptionalTies[];
+interface PlayersScoreboardProps {
+  playersWithOptionalTies: PlayersWithOptionalTies[];
 }
 
-export default function RemainingPlayers({
-  remainingPlayers,
-}: RemainingPlayersProps) {
+export default function PlayersScoreboard({
+  playersWithOptionalTies,
+}: PlayersScoreboardProps) {
   return (
-    remainingPlayers.length > 0 && (
+    playersWithOptionalTies.length > 0 && (
       <>
-        <p className="font-bold text-3xl md:text-4xl">Other Positions</p>
-        <Table className="text-sm md:text-xl select-none">
+        <p className="font-bold text-3xl md:text-4xl cursor-default">
+          Other Positions
+        </p>
+        <Table className="text-sm md:text-xl cursor-default">
           <TableHeader>
             <TableRow>
               <TableHead className="text-center font-semibold">
@@ -36,7 +38,7 @@ export default function RemainingPlayers({
             </TableRow>
           </TableHeader>
           <TableBody className="text-center font-medium break-all">
-            {remainingPlayers.map(({ players }, i) => (
+            {playersWithOptionalTies.map(({ players }, i) => (
               <TableRow key={i}>
                 <TableCell>{i + 2}</TableCell>
                 <TableCell className="flex flex-col items-center gap-[5px]">
@@ -45,7 +47,7 @@ export default function RemainingPlayers({
                   ))}
                 </TableCell>
                 <TableCell>
-                  <p>{players.filter(({ value }) => value !== 0)[0].value}$</p>
+                  <p>{players.find(({ value }) => value !== 0)?.value}$</p>
                 </TableCell>
               </TableRow>
             ))}

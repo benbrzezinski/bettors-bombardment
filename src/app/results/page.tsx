@@ -1,7 +1,7 @@
 "use client";
 
 import Winners from "@/components/winners";
-import RemainingPlayers from "@/components/remaining-players";
+import PlayersScoreboard from "@/components/players-scoreboard";
 import NewGameBtn from "@/components/new-game-btn";
 import { groupPlayersIfTheyAreTied, cn } from "@/lib/utils";
 import useStore from "@/store";
@@ -26,7 +26,7 @@ export default function Results() {
     >
       <Winners winners={winners} />
       <div className="flex flex-col items-center gap-[50px]">
-        <RemainingPlayers remainingPlayers={remainingPlayers} />
+        <PlayersScoreboard playersWithOptionalTies={remainingPlayers} />
         <NewGameBtn />
       </div>
     </div>

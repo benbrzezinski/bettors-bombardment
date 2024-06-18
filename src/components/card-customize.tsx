@@ -93,7 +93,7 @@ export default function CardCustomize() {
   };
 
   return (
-    <Card className="w-full">
+    <Card className="w-full cursor-default">
       <CardHeader className="items-center">
         <CardTitle>Customize Your Game</CardTitle>
         <CardDescription>

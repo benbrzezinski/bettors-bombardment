@@ -15,7 +15,7 @@ import {
 
 export default function CardInstructions() {
   return (
-    <Card className="w-full">
+    <Card className="w-full cursor-default">
       <CardHeader className="items-center">
         <CardTitle>Instructions</CardTitle>
         <CardDescription>Answers to fundamental questions.</CardDescription>

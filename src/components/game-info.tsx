@@ -18,8 +18,8 @@ export default function GameInfo({ player, betValue }: GameInfoProps) {
 
   return (
     <>
-      <p className="font-bold text-4xl">Round {currentRound}</p>
-      <div className="text-2xl text-center break-all">
+      <p className="font-bold text-4xl cursor-default">Round {currentRound}</p>
+      <div className="text-2xl text-center break-all cursor-default">
         <p>Bettor: {player.name}</p>
         <p>Balance: {getBalanceInRealTime(player.value)}</p>
       </div>
