@@ -13,17 +13,17 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
 import { toast } from "@/components/ui/use-toast";
+import {
+  GAME_MODES,
+  ABILITIES,
+  type NumberOfPlayers,
+  type Ability,
+} from "@/constants";
 import SelectNumberOfPlayers from "@/components/select-number-of-players";
 import PlayersData from "@/components/players-data";
 import SelectAmountOfRounds from "@/components/select-amount-of-rounds";
 import SelectGameMode from "@/components/select-game-mode";
 import useStore from "@/store";
-import {
-  GAME_MODES,
-  ABILITIES,
-  type GameMode,
-  type NumberOfPlayers,
-} from "@/constants";
 
 export interface PlayerData {
   name: string;
@@ -35,8 +35,7 @@ export default function CardCustomize() {
     0
   );
   const [playersData, setPlayersData] = useState<PlayerData[]>([]);
-  const [gameMode, setGameMode] = useState<GameMode>(GAME_MODES[0]);
-  const { amountOfRounds, setPlayers } = useStore();
+  const { amountOfRounds, gameMode, setPlayers } = useStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -76,16 +75,17 @@ export default function CardCustomize() {
 
     const players =
       gameMode === GAME_MODES[0]
-        ? playersData.map(p => ({
+        ? playersData.map(data => ({
             id: nanoid(),
-            name: p.name.trim(),
-            value: parseInt(p.value),
+            name: data.name.trim(),
+            value: parseInt(data.value),
           }))
-        : playersData.map(p => ({
+        : playersData.map(data => ({
             id: nanoid(),
-            name: p.name.trim(),
-            value: parseInt(p.value),
+            name: data.name.trim(),
+            value: parseInt(data.value),
             abilities: [...ABILITIES],
+            abilitiesInUse: [] as Ability[],
           }));
 
     setPlayers(players);
@@ -112,7 +112,7 @@ export default function CardCustomize() {
             setPlayersData={setPlayersData}
           />
           <SelectAmountOfRounds />
-          <SelectGameMode gameMode={gameMode} setGameMode={setGameMode} />
+          <SelectGameMode />
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">

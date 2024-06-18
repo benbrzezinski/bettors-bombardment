@@ -3,6 +3,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { GAME_MODES } from "@/constants";
 import useStore from "@/store";
 import useColorEffects from "@/hooks/use-color-effects";
 import GameInfo from "@/components/game-info";
@@ -25,23 +26,29 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
   const [betValue, setBetValue] = useState("");
   const [betSubmitted, setBetSubmitted] = useState(false);
   const [betMade, setBetMade] = useState(false);
-  const { players } = useStore();
+  const [forceRender, setForceRender] = useState(0);
+  const { players, gameMode } = useStore();
   const { magicColors, generateRandomColors } = useColorEffects();
+
+  const player = players.find(p => p.id === params.id);
 
   useEffect(() => {
     generateRandomColors();
-  }, [generateRandomColors]);
+  }, [generateRandomColors, forceRender]);
 
-  const nextPlayerExists = () => {
-    const i = players.findIndex(p => p.id === params.id);
+  useEffect(() => {
+    setBetValue("");
+    setBetSubmitted(false);
+    setBetMade(false);
+  }, [forceRender]);
 
-    if (i !== -1) {
-      return players[i + 1];
+  const nextPlayerExists = (skipLevel = 1) => {
+    const currentPlayerIndex = players.findIndex(p => p.id === params.id);
+
+    if (currentPlayerIndex !== -1) {
+      return players[currentPlayerIndex + skipLevel];
     }
   };
-
-  const player = players.find(p => p.id === params.id);
-  const nextPlayer = nextPlayerExists();
 
   return player ? (
     <>
@@ -56,15 +63,26 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
           setBetSubmitted={setBetSubmitted}
         />
         {magicColors.length > 0 ? (
-          <div className={cn("relative", player.abilities && "mt-[50px]")}>
-            <Abilities abilities={player.abilities} />
+          <div
+            className={cn(
+              "relative",
+              gameMode === GAME_MODES[1] && "mt-[50px]"
+            )}
+          >
+            <Abilities
+              id={player.id}
+              abilities={player.abilities}
+              abilitiesInUse={player.abilitiesInUse}
+              betMade={betMade}
+            />
             <Multiplier />
             <HiddenFields
+              key={forceRender}
               magicColors={magicColors}
               betValue={betValue}
               betSubmitted={betSubmitted}
               betMade={betMade}
-              currentPlayer={player}
+              player={player}
               setBetValue={setBetValue}
               setBetMade={setBetMade}
             />
@@ -73,13 +91,14 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
           <Skeleton className="w-[290px] h-[1190px] sm:size-[590px] rounded-md" />
         )}
         <GameplayActionBtn
-          nextPlayer={nextPlayer}
-          playerValue={player.value}
+          player={player}
           betMade={betMade}
+          setForceRender={setForceRender}
+          nextPlayerExists={nextPlayerExists}
         />
       </div>
       <QuitBtn />
-      <DefeatPopupMessage player={player} nextPlayer={nextPlayer} />
+      <DefeatPopupMessage player={player} nextPlayerExists={nextPlayerExists} />
     </>
   ) : (
     <PlayerNotFound />

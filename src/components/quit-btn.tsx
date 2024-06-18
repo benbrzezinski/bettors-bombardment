@@ -32,7 +32,7 @@ export default function QuitBtn() {
       <AlertDialogTrigger asChild>
         <Button
           variant="destructive"
-          className="animate-fade-in opacity-0 absolute top-[10px] right-[10px] sm:top-[15px] sm:right-[15px]"
+          className="animate-fade-in opacity-0 pointer-events-none absolute top-[10px] right-[10px] sm:top-[15px] sm:right-[15px]"
         >
           <LogOut className="sm:mr-[10px]" />
           {isSmallScreen ? "" : "Quit"}

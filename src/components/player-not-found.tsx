@@ -19,7 +19,7 @@ export default function PlayerNotFound() {
   return (
     <div className="flex flex-col items-center gap-[10px]">
       <p className="text-center">
-        Player not found, please start the game again
+        Bettor not found, please start the game again.
       </p>
       <div className="size-[300px] relative">
         <Lottie

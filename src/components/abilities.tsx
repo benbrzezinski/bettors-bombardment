@@ -12,30 +12,60 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { ABILITIES, type Ability } from "@/constants";
+import { X } from "lucide-react";
+import { ABILITIES, GAME_MODES, type Ability } from "@/constants";
+import { cn } from "@/lib/utils";
+import useStore from "@/store";
 import useAbilities from "@/hooks/use-abilities";
 
 interface AbilitiesProps {
+  id: string;
   abilities?: Ability[];
+  abilitiesInUse?: Ability[];
+  betMade: boolean;
 }
 
-export default function Abilities({ abilities }: AbilitiesProps) {
+export default function Abilities({
+  id,
+  abilities,
+  abilitiesInUse,
+  betMade,
+}: AbilitiesProps) {
+  const { gameMode, deletePlayerAbility, addPlayerAbilityInUse } = useStore();
   const { getAbilityDetails } = useAbilities();
 
-  return abilities ? (
+  const handleUseAbility = (ability: Ability) => {
+    deletePlayerAbility(id, ability);
+    addPlayerAbilityInUse(id, ability);
+  };
+
+  return gameMode === GAME_MODES[1] ? (
     <ul className="flex gap-[20px] absolute translate-y-[-140%]">
       {ABILITIES.map(ability => {
         const details = getAbilityDetails(ability);
+        const isAbilityAvailable = abilities?.includes(ability);
+        const isAbilityInUse = abilitiesInUse?.includes(ability);
 
         return (
           <li key={ability}>
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <Button
-                  className="size-[50px] rounded-full p-0"
-                  variant="outline"
+                  className={cn(
+                    "relative size-[50px] rounded-full p-0",
+                    isAbilityInUse && "disabled:opacity-100"
+                  )}
+                  variant={isAbilityInUse ? "default" : "outline"}
+                  disabled={!isAbilityAvailable || betMade}
                 >
                   {details.icon}
+                  {!isAbilityAvailable && !isAbilityInUse && (
+                    <X
+                      className="absolute text-destructive"
+                      size={62}
+                      strokeWidth={1}
+                    />
+                  )}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
@@ -50,7 +80,13 @@ export default function Abilities({ abilities }: AbilitiesProps) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Use</AlertDialogAction>
+                  <AlertDialogAction
+                    onClick={() => {
+                      handleUseAbility(ability);
+                    }}
+                  >
+                    Use
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>

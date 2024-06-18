@@ -67,7 +67,7 @@ const config = {
           to: { height: "0" },
         },
         "fade-in": {
-          to: { opacity: "1" },
+          to: { opacity: "1", "pointer-events": "auto" },
         },
       },
       animation: {

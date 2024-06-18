@@ -1,5 +1,5 @@
-import type { Ability } from "@/constants";
 import { Receipt, HeartHandshake, SkipForward } from "lucide-react";
+import type { Ability } from "@/constants";
 
 interface Details {
   icon: React.JSX.Element;
@@ -19,7 +19,7 @@ const useAbilities = () => {
         icon: <HeartHandshake />,
         title: "Second Chance",
         description:
-          "If you get zeroed out, you don't lose, but your balance is divided by 2.",
+          "You are protected from being zeroed out, but when this happens, your balance will be halved.",
       },
       skipNextPlayer: {
         icon: <SkipForward />,

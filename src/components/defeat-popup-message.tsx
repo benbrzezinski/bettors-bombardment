@@ -17,12 +17,12 @@ import useStore, { type Player } from "@/store";
 
 interface DefeatPopupMessageProps {
   player: Player;
-  nextPlayer: Player | undefined;
+  nextPlayerExists: (skipLevel?: number) => Player | undefined;
 }
 
 export default function DefeatPopupMessage({
   player,
-  nextPlayer,
+  nextPlayerExists,
 }: DefeatPopupMessageProps) {
   const { players, amountOfRounds, currentRound, deletePlayer } = useStore();
   const alertTriggerBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -41,6 +41,8 @@ export default function DefeatPopupMessage({
       };
     }
   }, [player, player?.value]);
+
+  const nextPlayer = nextPlayerExists();
 
   return (
     <AlertDialog>
