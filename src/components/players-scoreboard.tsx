@@ -12,17 +12,21 @@ import type { PlayersWithOptionalTies } from "@/lib/utils";
 
 interface PlayersScoreboardProps {
   playersWithOptionalTies: PlayersWithOptionalTies[];
+  rawTable?: boolean;
 }
 
 export default function PlayersScoreboard({
   playersWithOptionalTies,
+  rawTable,
 }: PlayersScoreboardProps) {
   return (
     playersWithOptionalTies.length > 0 && (
       <>
-        <p className="font-bold text-3xl md:text-4xl cursor-default">
-          Other Positions
-        </p>
+        {!rawTable && (
+          <p className="font-bold text-3xl md:text-4xl cursor-default">
+            Other Positions
+          </p>
+        )}
         <Table className="text-sm md:text-xl cursor-default">
           <TableHeader>
             <TableRow>
@@ -40,7 +44,7 @@ export default function PlayersScoreboard({
           <TableBody className="text-center font-medium break-all">
             {playersWithOptionalTies.map(({ players }, i) => (
               <TableRow key={i}>
-                <TableCell>{i + 2}</TableCell>
+                <TableCell>{rawTable ? i + 1 : i + 2}</TableCell>
                 <TableCell className="flex flex-col items-center gap-[5px]">
                   {players.map(({ id, name }) => (
                     <p key={id}>{name}</p>

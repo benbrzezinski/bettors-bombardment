@@ -11,10 +11,11 @@ import BetValueInput from "@/components/bet-value-input";
 import Multiplier from "@/components/multiplier";
 import HiddenFields from "@/components/hidden-fields";
 import GameplayActionBtn from "@/components/gameplay-action-btn";
-import DefeatPopupMessage from "@/components/defeat-popup-message";
-import PlayerNotFound from "@/components/player-not-found";
 import Abilities from "@/components/abilities";
+import DefeatPopupMessage from "@/components/defeat-popup-message";
+import RealTimePlayersScoreboardMenu from "@/components/real-time-players-scoreboard-menu";
 import QuitBtn from "@/components/quit-btn";
+import PlayerNotFound from "@/components/player-not-found";
 
 interface GameplayDetailsProps {
   params: {
@@ -97,8 +98,9 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
           nextPlayerExists={nextPlayerExists}
         />
       </div>
-      <QuitBtn />
+      <RealTimePlayersScoreboardMenu />
       <DefeatPopupMessage player={player} nextPlayerExists={nextPlayerExists} />
+      <QuitBtn />
     </>
   ) : (
     <PlayerNotFound />
