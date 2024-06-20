@@ -22,7 +22,7 @@ export default function BetValueInput({
   setBetValue,
   setBetSubmitted,
 }: BetValueInputProps) {
-  const submittingBet = () => {
+  const submitBet = () => {
     const betValueParsed = parseInt(betValue);
 
     if (
@@ -44,7 +44,7 @@ export default function BetValueInput({
     setBetSubmitted(true);
   };
 
-  const resettingBet = () => {
+  const resetBet = () => {
     setBetValue("");
     setBetSubmitted(false);
   };
@@ -52,8 +52,9 @@ export default function BetValueInput({
   return (
     <div className="w-full flex flex-col items-center gap-[15px]">
       <Input
-        name="bet-value"
         type="text"
+        name="bet-value"
+        inputMode="numeric"
         placeholder="Value to bet"
         className="max-w-[500px]"
         value={betValue}
@@ -68,7 +69,7 @@ export default function BetValueInput({
         <Button
           variant="secondary"
           disabled={betSubmitted || betMade}
-          onClick={submittingBet}
+          onClick={submitBet}
         >
           Submit
         </Button>
@@ -82,7 +83,7 @@ export default function BetValueInput({
         <Button
           variant="outline"
           disabled={!betSubmitted || betMade}
-          onClick={resettingBet}
+          onClick={resetBet}
         >
           Reset
         </Button>

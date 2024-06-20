@@ -83,7 +83,7 @@ const useStore = create<State>(set => ({
           player.abilitiesInUse?.includes(ABILITIES[1]) &&
           player.value === 0
         ) {
-          player.value = originalValue / 2;
+          player.value = Math.round(originalValue / 2);
         }
 
         if (
