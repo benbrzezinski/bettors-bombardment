@@ -30,18 +30,18 @@ export default function PlayersScoreboard({
         <Table className="text-sm md:text-xl cursor-default">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center font-semibold">
+              <TableHead className="font-semibold text-center">
                 Position
               </TableHead>
-              <TableHead className="text-center font-semibold">
+              <TableHead className="font-semibold text-center">
                 Bettor
               </TableHead>
-              <TableHead className="text-center font-semibold">
+              <TableHead className="font-semibold text-center">
                 Balance
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="text-center font-medium break-all">
+          <TableBody className="font-medium text-center">
             {playersWithOptionalTies.map(({ players }, i) => (
               <TableRow key={i}>
                 <TableCell>{rawTable ? i + 1 : i + 2}</TableCell>

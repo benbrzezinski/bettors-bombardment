@@ -28,17 +28,26 @@ export default function PlayersData({
 
   return numberOfPlayers ? (
     <div className="flex flex-col gap-[20px]">
-      <div>
-        <CardDescription>
-          * Player names must be unique, regardless of case sensitive.
-        </CardDescription>
-        <CardDescription>
-          * Name can only contain basic letters [A-Z].
-        </CardDescription>
-        <CardDescription>
-          * Value can only contain digits and must be a positive integer.
-        </CardDescription>
-      </div>
+      <ul className="flex flex-col gap-[5px]">
+        <li className="flex gap-[11px]">
+          <span className="align-middle text-muted-foreground">*</span>
+          <CardDescription>
+            Player names must be unique, regardless of case sensitive.
+          </CardDescription>
+        </li>
+        <li className="flex gap-[11px]">
+          <span className="align-middle text-muted-foreground">*</span>
+          <CardDescription>
+            Name can only contain basic letters [A-Z].
+          </CardDescription>
+        </li>
+        <li className="flex gap-[11px]">
+          <span className="align-middle text-muted-foreground">*</span>
+          <CardDescription>
+            Value can only contain digits and must be a positive integer.
+          </CardDescription>
+        </li>
+      </ul>
       {playersData.map(({ name, value }, i) => (
         <div className="flex flex-col gap-[6px]" key={i}>
           <p className="text-lg mb-[4px]">Bettor {i + 1}</p>
