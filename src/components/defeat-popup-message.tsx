@@ -53,7 +53,7 @@ export default function DefeatPopupMessage({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-destructive text-2xl">
-            You have just lost!
+            Eliminated
           </AlertDialogTitle>
           <AlertDialogDescription>
             Your balance has been cleared. You have been removed from the game

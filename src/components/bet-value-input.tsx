@@ -56,7 +56,7 @@ export default function BetValueInput({
         name="bet-value"
         inputMode="numeric"
         placeholder="Value to bet"
-        className="max-w-[500px]"
+        className="max-w-[500px] text-base"
         value={betValue}
         disabled={betSubmitted || betMade}
         onChange={e => {

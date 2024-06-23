@@ -48,7 +48,7 @@
   }
 
   div[role="alertdialog"] {
-    width: 95%;
-    border-radius: 8px;
+    width: 90%;
+    border-radius: var(--radius);
   }
 }
