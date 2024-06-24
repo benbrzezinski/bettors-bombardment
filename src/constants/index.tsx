@@ -7,7 +7,12 @@ export type AmountOfRounds = (typeof AMOUNT_OF_ROUNDS)[number];
 export const GAME_MODES = ["Normal", "Abilities"] as const;
 export type GameMode = (typeof GAME_MODES)[number];
 
-export const ABILITIES = ["10x", "secondChance", "skipNextPlayer"] as const;
+export const ABILITIES = [
+  "testYourLuck",
+  "secondChance",
+  "skipNextPlayer",
+  "luckThief",
+] as const;
 export type Ability = (typeof ABILITIES)[number];
 
 export const COLORS = [

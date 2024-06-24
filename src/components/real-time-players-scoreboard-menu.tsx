@@ -9,7 +9,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Users } from "lucide-react";
 import PlayersScoreboard from "@/components/players-scoreboard";
 import { groupPlayersIfTheyAreTied } from "@/lib/utils";
 import useStore from "@/store";
@@ -27,7 +27,7 @@ export default function RealTimePlayersScoreboardMenu() {
           variant="outline"
           className="animate-fade-in opacity-0 pointer-events-none fixed top-[90%] md:top-[50%] translate-y-[-50%] right-[0px] md:right-[15px] 2xl:right-[30px] border-r-0 md:border-r rounded-r-none md:rounded-r-md px-[10px] sm:px-[16px]"
         >
-          <Menu />
+          <Users />
         </Button>
       </SheetTrigger>
       <SheetContent className="overflow-y-auto">

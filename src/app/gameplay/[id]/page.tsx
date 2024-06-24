@@ -2,8 +2,6 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import { GAME_MODES } from "@/constants";
 import useStore from "@/store";
 import useColorEffects from "@/hooks/use-color-effects";
 import GameInfo from "@/components/game-info";
@@ -11,7 +9,7 @@ import BetValueInput from "@/components/bet-value-input";
 import Multiplier from "@/components/multiplier";
 import HiddenFields from "@/components/hidden-fields";
 import GameplayActionBtn from "@/components/gameplay-action-btn";
-import Abilities from "@/components/abilities";
+import AbilitiesMenu from "@/components/abilities-menu";
 import DefeatPopupMessage from "@/components/defeat-popup-message";
 import RealTimePlayersScoreboardMenu from "@/components/real-time-players-scoreboard-menu";
 import QuitBtn from "@/components/quit-btn";
@@ -28,7 +26,7 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
   const [betSubmitted, setBetSubmitted] = useState(false);
   const [betMade, setBetMade] = useState(false);
   const [forceRender, setForceRender] = useState(0);
-  const { players, gameMode } = useStore();
+  const { players } = useStore();
   const { magicColors, generateRandomColors } = useColorEffects();
 
   const player = players.find(p => p.id === params.id);
@@ -64,18 +62,7 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
           setBetSubmitted={setBetSubmitted}
         />
         {magicColors.length > 0 ? (
-          <div
-            className={cn(
-              "relative",
-              gameMode === GAME_MODES[1] && "mt-[50px]"
-            )}
-          >
-            <Abilities
-              id={player.id}
-              abilities={player.abilities}
-              abilitiesInUse={player.abilitiesInUse}
-              betMade={betMade}
-            />
+          <div className="relative">
             <Multiplier />
             <HiddenFields
               key={forceRender}
@@ -98,6 +85,7 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
           nextPlayerExists={nextPlayerExists}
         />
       </div>
+      <AbilitiesMenu player={player} betMade={betMade} />
       <RealTimePlayersScoreboardMenu />
       <DefeatPopupMessage player={player} nextPlayerExists={nextPlayerExists} />
       <QuitBtn />

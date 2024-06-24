@@ -1,38 +1,38 @@
-import { Receipt, HeartHandshake, SkipForward } from "lucide-react";
-import type { Ability } from "@/constants";
-
-interface Details {
-  icon: React.JSX.Element;
-  title: string;
-  description: string;
-}
+import { MATH_OPERATIONS } from "@/data/color-effects";
+import useStore from "@/store";
 
 const useAbilities = () => {
-  const getAbilityDetails = (ability: Ability) => {
-    const details: Record<Ability, Details> = {
-      "10x": {
-        icon: <Receipt />,
-        title: "Test Your Luck",
-        description: "Your next drawn effect is multiplied by 10.",
-      },
-      secondChance: {
-        icon: <HeartHandshake />,
-        title: "Second Chance",
-        description:
-          "You are protected from being zeroed out, but when this happens, your balance will be halved.",
-      },
-      skipNextPlayer: {
-        icon: <SkipForward />,
-        title: "Skip Next Player",
-        description:
-          "The next player loses his turn. If this is used at the end of a round, the first player of the next round is skipped, if any.",
-      },
-    };
+  const { players, updatePlayerBalance } = useStore();
 
-    return details[ability];
+  const runLuckThief = (id: string, value: number) => {
+    const sortedPlayers = [...players].sort((a, b) => {
+      if (b.value !== a.value) {
+        return b.value - a.value;
+      } else {
+        return a.name.localeCompare(b.name);
+      }
+    });
+
+    const playerWithTheHighestBalance = sortedPlayers[0];
+    const oneTenthOfTheValue = Math.round(
+      playerWithTheHighestBalance.value / 10
+    );
+
+    updatePlayerBalance(
+      playerWithTheHighestBalance.id,
+      playerWithTheHighestBalance.value,
+      oneTenthOfTheValue,
+      MATH_OPERATIONS.Subtraction
+    );
+    updatePlayerBalance(
+      id,
+      value,
+      oneTenthOfTheValue,
+      MATH_OPERATIONS.Addition
+    );
   };
 
-  return { getAbilityDetails };
+  return { runLuckThief };
 };
 
 export default useAbilities;

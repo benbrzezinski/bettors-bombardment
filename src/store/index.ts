@@ -85,13 +85,6 @@ const useStore = create<State>(set => ({
         ) {
           player.value = Math.round(originalValue / 2);
         }
-
-        if (
-          state.gameMode === GAME_MODES[1] &&
-          player.abilitiesInUse?.includes(ABILITIES[1])
-        ) {
-          state.deletePlayerAbilityInUse(player.id, ABILITIES[1]);
-        }
       }
 
       return { players: updatedPlayers };

@@ -74,8 +74,16 @@ export default function HiddenFields({
     )}`;
 
     updatePlayerBalance(player.id, betValueParsed, effectValue, operation);
-    setBetMade(true);
+
+    if (
+      gameMode === GAME_MODES[1] &&
+      player.abilitiesInUse?.includes(ABILITIES[1])
+    ) {
+      deletePlayerAbilityInUse(player.id, ABILITIES[1]);
+    }
+
     setBetValue("");
+    setBetMade(true);
   };
 
   return (
