@@ -69,3 +69,13 @@ export const covertLargerNumberIntoSimplerForm = (n: number) => {
 
   return n;
 };
+
+export const sortPlayers = (players: Player[]) => {
+  return [...players].sort((a, b) => {
+    if (a.value !== b.value) {
+      return b.value - a.value;
+    } else {
+      return a.name.localeCompare(b.name);
+    }
+  });
+};

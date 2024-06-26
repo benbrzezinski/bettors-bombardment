@@ -1,6 +1,12 @@
 "use client";
 
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogAction,
@@ -36,7 +42,7 @@ export default function Abilities({
 }: AbilitiesProps) {
   const { gameMode, deletePlayerAbility, addPlayerAbilityInUse } = useStore();
   const { getAbilityDetails } = useAbilityDetails();
-  const { runLuckThief } = useAbilities();
+  const { runLuckThief, runBalanceEqualizer } = useAbilities();
 
   const handleUseAbility = (ability: Ability) => {
     deletePlayerAbility(id, ability);
@@ -46,62 +52,76 @@ export default function Abilities({
       return;
     }
 
+    if (ability === ABILITIES[5]) {
+      runBalanceEqualizer(id);
+      return;
+    }
+
     addPlayerAbilityInUse(id, ability);
   };
 
   return (
     gameMode === GAME_MODES[1] && (
-      <ul className="flex flex-wrap gap-[20px]">
+      <ul className="flex justify-center flex-wrap gap-[20px]">
         {ABILITIES.map(ability => {
           const details = getAbilityDetails(ability);
           const isAbilityAvailable = abilities?.includes(ability);
           const isAbilityInUse = abilitiesInUse?.includes(ability);
 
           return (
-            <li key={ability}>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button
-                    className={cn(
-                      "relative size-[50px] rounded-full p-0",
-                      isAbilityInUse && "disabled:opacity-100"
-                    )}
-                    variant={isAbilityInUse ? "default" : "outline"}
-                    disabled={!isAbilityAvailable || betMade}
-                  >
-                    {details.icon}
-                    {!isAbilityAvailable && !isAbilityInUse && (
-                      <X
-                        className="absolute text-destructive"
-                        size={62}
-                        strokeWidth={1}
-                      />
-                    )}
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>{details.title}</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      {details.description}
-                      <span className="block font-medium text-destructive mt-[5px]">
-                        It can only be used once!
-                      </span>
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        handleUseAbility(ability);
-                      }}
-                    >
-                      Use
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-            </li>
+            <TooltipProvider delayDuration={500} key={ability}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <li>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          className={cn(
+                            "relative size-[50px] rounded-full p-0",
+                            isAbilityInUse && "disabled:opacity-100"
+                          )}
+                          variant={isAbilityInUse ? "default" : "outline"}
+                          disabled={!isAbilityAvailable || betMade}
+                        >
+                          {details.icon}
+                          {!isAbilityAvailable && !isAbilityInUse && (
+                            <X
+                              className="absolute text-destructive"
+                              size={62}
+                              strokeWidth={1}
+                            />
+                          )}
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>{details.title}</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            {details.description}
+                            <span className="block font-medium text-destructive mt-[5px]">
+                              It can only be used once!
+                            </span>
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              handleUseAbility(ability);
+                            }}
+                          >
+                            Use
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </li>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{details.title}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           );
         })}
       </ul>

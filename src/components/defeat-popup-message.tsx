@@ -29,7 +29,7 @@ export default function DefeatPopupMessage({
   const router = useRouter();
 
   useEffect(() => {
-    if (player && player.value === 0 && alertTriggerBtnRef.current) {
+    if (player.value === 0 && alertTriggerBtnRef.current) {
       const triggerBtn = alertTriggerBtnRef.current;
 
       const timeoutID = setTimeout(() => {
@@ -40,7 +40,7 @@ export default function DefeatPopupMessage({
         clearTimeout(timeoutID);
       };
     }
-  }, [player, player?.value]);
+  }, [player.value]);
 
   const nextPlayer = nextPlayerExists();
 

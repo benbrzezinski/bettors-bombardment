@@ -3,15 +3,15 @@
 import Winners from "@/components/winners";
 import PlayersScoreboard from "@/components/players-scoreboard";
 import NewGameBtn from "@/components/new-game-btn";
-import { groupPlayersIfTheyAreTied, cn } from "@/lib/utils";
+import { groupPlayersIfTheyAreTied, cn, sortPlayers } from "@/lib/utils";
 import useStore from "@/store";
 
 export default function Results() {
   const { players } = useStore();
 
-  const sortedPlayers = [...players].sort((a, b) => b.value - a.value);
+  const sortedPlayers = sortPlayers(players);
   const winners = sortedPlayers.filter(
-    player => player.value === sortedPlayers.at(0)?.value
+    player => player.value === sortedPlayers[0].value
   );
   const remainingPlayers = groupPlayersIfTheyAreTied(
     sortedPlayers.slice(winners.length)

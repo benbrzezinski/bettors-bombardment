@@ -21,7 +21,7 @@ export default function Multiplier() {
             {currentRound}x
           </p>
         </HoverCardTrigger>
-        <HoverCardContent>
+        <HoverCardContent side="right">
           Multiplier that applies to all drawn effects in this round.
         </HoverCardContent>
       </HoverCard>

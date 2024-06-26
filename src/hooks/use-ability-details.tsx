@@ -1,4 +1,11 @@
-import { Receipt, HeartHandshake, SkipForward, Drama } from "lucide-react";
+import {
+  Receipt,
+  HeartHandshake,
+  SkipForward,
+  Drama,
+  Grid2x2Check,
+  Equal,
+} from "lucide-react";
 import type { Ability } from "@/constants";
 
 interface Details {
@@ -13,7 +20,8 @@ const useAbilityDetails = () => {
       testYourLuck: {
         icon: <Receipt />,
         title: "Test Your Luck",
-        description: "Your next drawn effect is multiplied by 10.",
+        description:
+          "Your next drawn effect is multiplied by 10, whether it is positive or negative.",
       },
       secondChance: {
         icon: <HeartHandshake />,
@@ -31,7 +39,19 @@ const useAbilityDetails = () => {
         icon: <Drama />,
         title: "Luck Thief",
         description:
-          "Steal 10% of the balance from the player with the highest balance.",
+          "Steal 10% of the balance from the player who currently has the highest balance.",
+      },
+      doubleTrouble: {
+        icon: <Grid2x2Check />,
+        title: "Double Trouble",
+        description:
+          "The effect of the next field you reveal is applied twice, whether it is positive or negative.",
+      },
+      balanceEqualizer: {
+        icon: <Equal />,
+        title: "Balance Equalizer",
+        description:
+          "Equalize your balance with the player who currently has the closest balance to yours.",
       },
     };
 

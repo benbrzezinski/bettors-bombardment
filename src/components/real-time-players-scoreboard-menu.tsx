@@ -11,13 +11,13 @@ import {
 import { Button } from "@/components/ui/button";
 import { Users } from "lucide-react";
 import PlayersScoreboard from "@/components/players-scoreboard";
-import { groupPlayersIfTheyAreTied } from "@/lib/utils";
+import { groupPlayersIfTheyAreTied, sortPlayers } from "@/lib/utils";
 import useStore from "@/store";
 
 export default function RealTimePlayersScoreboardMenu() {
   const { players } = useStore();
 
-  const sortedPlayers = [...players].sort((a, b) => b.value - a.value);
+  const sortedPlayers = sortPlayers(players);
   const groupedPlayers = groupPlayersIfTheyAreTied(sortedPlayers);
 
   return (
@@ -30,9 +30,12 @@ export default function RealTimePlayersScoreboardMenu() {
           <Users />
         </Button>
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto">
+      <SheetContent
+        className="overflow-y-auto"
+        onOpenAutoFocus={e => e.preventDefault()}
+      >
         <SheetHeader className="mb-[20px]">
-          <SheetTitle>Player&apos;s Scoreboard</SheetTitle>
+          <SheetTitle>Player&rsquo;s Scoreboard</SheetTitle>
           <SheetDescription>
             Shows the current status of the results. Updates are made in real
             time.

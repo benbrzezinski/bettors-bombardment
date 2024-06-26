@@ -33,7 +33,11 @@ export default function AbilitiesMenu({ player, betMade }: AbilitiesMenuProps) {
             <WandSparkles />
           </Button>
         </SheetTrigger>
-        <SheetContent className="overflow-y-auto" side="left">
+        <SheetContent
+          className="overflow-y-auto"
+          side="left"
+          onOpenAutoFocus={e => e.preventDefault()}
+        >
           <SheetHeader className="mb-[20px]">
             <SheetTitle>Abilities</SheetTitle>
             <SheetDescription>

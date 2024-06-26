@@ -12,6 +12,8 @@ export const ABILITIES = [
   "secondChance",
   "skipNextPlayer",
   "luckThief",
+  "doubleTrouble",
+  "balanceEqualizer",
 ] as const;
 export type Ability = (typeof ABILITIES)[number];
 

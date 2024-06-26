@@ -45,7 +45,7 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
     const currentPlayerIndex = players.findIndex(p => p.id === params.id);
 
     if (currentPlayerIndex !== -1) {
-      return players[currentPlayerIndex + skipLevel];
+      return players.at(currentPlayerIndex + skipLevel);
     }
   };
 
@@ -72,6 +72,7 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
               betMade={betMade}
               player={player}
               setBetValue={setBetValue}
+              setBetSubmitted={setBetSubmitted}
               setBetMade={setBetMade}
             />
           </div>

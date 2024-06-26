@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, MouseEvent, SetStateAction } from "react";
+import { Dispatch, MouseEvent, SetStateAction, useRef } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
 import { colorEffects } from "@/data/color-effects";
@@ -14,6 +14,7 @@ interface HiddenFieldsProps {
   betMade: boolean;
   player: Player;
   setBetValue: Dispatch<SetStateAction<string>>;
+  setBetSubmitted: Dispatch<SetStateAction<boolean>>;
   setBetMade: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -24,6 +25,7 @@ export default function HiddenFields({
   betMade,
   player,
   setBetValue,
+  setBetSubmitted,
   setBetMade,
 }: HiddenFieldsProps) {
   const {
@@ -32,11 +34,19 @@ export default function HiddenFields({
     updatePlayerBalance,
     deletePlayerAbilityInUse,
   } = useStore();
+  const betValueRef = useRef<string | null>(null);
+  const betMadeRef = useRef(false);
 
-  const selectField = (color: Color) => (e: MouseEvent<HTMLButtonElement>) => {
-    if (betMade) return;
+  const selectField = (
+    e: MouseEvent<HTMLButtonElement>,
+    color: Color,
+    isRepetitive = false
+  ) => {
+    if (betMade || betMadeRef.current) return;
 
-    const betValueParsed = parseInt(betValue);
+    const betValueParsed = betValueRef.current
+      ? parseInt(betValueRef.current)
+      : parseInt(betValue);
 
     if (
       !betSubmitted ||
@@ -82,9 +92,33 @@ export default function HiddenFields({
       deletePlayerAbilityInUse(player.id, ABILITIES[1]);
     }
 
+    if (isRepetitive && player.value > 0) {
+      if (betValueParsed > player.value) {
+        betValueRef.current = player.value.toString();
+        setBetValue(player.value.toString());
+      }
+
+      return;
+    }
+
     setBetValue("");
+    setBetSubmitted(false);
     setBetMade(true);
+    betMadeRef.current = true;
   };
+
+  const handleClickField =
+    (color: Color) => (e: MouseEvent<HTMLButtonElement>) => {
+      if (
+        gameMode === GAME_MODES[1] &&
+        player.abilitiesInUse?.includes(ABILITIES[4])
+      ) {
+        selectField(e, color, true);
+        deletePlayerAbilityInUse(player.id, ABILITIES[4]);
+      }
+
+      selectField(e, color);
+    };
 
   return (
     <ul
@@ -98,7 +132,7 @@ export default function HiddenFields({
           <button
             type="button"
             className="size-[50px] border border-white rounded-md grid place-items-center transition-[transform,background-color] hover:bg-secondary focus-visible:bg-secondary"
-            onClick={selectField(color)}
+            onClick={handleClickField(color)}
           >
             {i + 1}
           </button>
