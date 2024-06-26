@@ -24,9 +24,11 @@ export default function DefeatPopupMessage({
   player,
   nextPlayerExists,
 }: DefeatPopupMessageProps) {
-  const { players, amountOfRounds, currentRound, deletePlayer } = useStore();
+  const { players, amountOfRounds, currentRound, deletePlayer, nextRound } =
+    useStore();
   const alertTriggerBtnRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
+  const nextPlayer = nextPlayerExists();
 
   useEffect(() => {
     if (player.value === 0 && alertTriggerBtnRef.current) {
@@ -42,7 +44,18 @@ export default function DefeatPopupMessage({
     }
   }, [player.value]);
 
-  const nextPlayer = nextPlayerExists();
+  const handleAction = () => {
+    deletePlayer(player.id);
+
+    if (nextPlayer) {
+      router.replace(`/gameplay/${nextPlayer.id}`);
+    } else if (amountOfRounds > currentRound && players.length > 2) {
+      nextRound();
+      router.replace(`/gameplay/${players[0].id}`);
+    } else {
+      router.replace("/results");
+    }
+  };
 
   return (
     <AlertDialog>
@@ -62,17 +75,7 @@ export default function DefeatPopupMessage({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction
-            onClick={() => {
-              deletePlayer(player.id);
-
-              nextPlayer
-                ? router.replace(`/gameplay/${nextPlayer.id}`)
-                : amountOfRounds > currentRound && players.length > 1
-                ? router.replace(`/gameplay/${players[0].id}`)
-                : router.replace("/results");
-            }}
-          >
+          <AlertDialogAction onClick={handleAction}>
             <ChevronRight />
           </AlertDialogAction>
         </AlertDialogFooter>

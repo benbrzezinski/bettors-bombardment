@@ -1,9 +1,12 @@
-import { MATH_OPERATIONS } from "@/data/color-effects";
+import { MouseEvent, useState } from "react";
+import { MATH_OPERATIONS, colorEffects } from "@/data/color-effects";
+import { ABILITIES, COLORS, type Color } from "@/constants";
 import { sortPlayers } from "@/lib/utils";
 import useStore from "@/store";
 
 const useAbilities = () => {
-  const { players, updatePlayerBalance } = useStore();
+  const [sneakPeekQuantity, setSneakPeekQuantity] = useState(0);
+  const { players, updatePlayerBalance, deletePlayerAbilityInUse } = useStore();
 
   const sortedPlayers = sortPlayers(players);
 
@@ -94,7 +97,33 @@ const useAbilities = () => {
     }
   };
 
-  return { runLuckThief, runBalanceEqualizer };
+  const runSneakPeek = (
+    id: string,
+    e: MouseEvent<HTMLButtonElement>,
+    color: Color
+  ) => {
+    const btn = e.currentTarget;
+    if (btn.hasAttribute("style")) return;
+
+    const { operation } = colorEffects[color];
+    const btnBorderColor =
+      operation === MATH_OPERATIONS.Addition ||
+      operation === MATH_OPERATIONS.Multiplication
+        ? COLORS[1]
+        : COLORS[0];
+
+    btn.style.borderColor = btnBorderColor;
+    btn.style.borderWidth = "2px";
+
+    if (sneakPeekQuantity === 2) {
+      deletePlayerAbilityInUse(id, ABILITIES[6]);
+      return;
+    }
+
+    setSneakPeekQuantity(q => q + 1);
+  };
+
+  return { runLuckThief, runBalanceEqualizer, runSneakPeek };
 };
 
 export default useAbilities;

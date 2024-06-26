@@ -4,8 +4,9 @@ import { Dispatch, MouseEvent, SetStateAction, useRef } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
 import { colorEffects } from "@/data/color-effects";
-import useStore, { type Player } from "@/store";
 import { ABILITIES, GAME_MODES, type Color } from "@/constants";
+import useStore, { type Player } from "@/store";
+import useAbilities from "@/hooks/use-abilities";
 
 interface HiddenFieldsProps {
   magicColors: Color[];
@@ -34,6 +35,7 @@ export default function HiddenFields({
     updatePlayerBalance,
     deletePlayerAbilityInUse,
   } = useStore();
+  const { runSneakPeek } = useAbilities();
   const betValueRef = useRef<string | null>(null);
   const betMadeRef = useRef(false);
 
@@ -66,9 +68,8 @@ export default function HiddenFields({
 
     const btn = e.currentTarget;
     const btnStyle = `border:none; color:black; font-size:14px; font-weight:700; background-color:${color}; box-shadow: 0px 0px 10px 0px ${color}; transform:scale(1.2);`;
-    const colorEffect = colorEffects[color];
-    const operation = colorEffect.operation;
-    let effectValue = colorEffect.value * currentRound;
+    const { value, operation } = colorEffects[color];
+    let effectValue = value * currentRound;
 
     if (
       gameMode === GAME_MODES[1] &&
@@ -109,12 +110,16 @@ export default function HiddenFields({
 
   const handleClickField =
     (color: Color) => (e: MouseEvent<HTMLButtonElement>) => {
-      if (
-        gameMode === GAME_MODES[1] &&
-        player.abilitiesInUse?.includes(ABILITIES[4])
-      ) {
-        selectField(e, color, true);
-        deletePlayerAbilityInUse(player.id, ABILITIES[4]);
+      if (gameMode === GAME_MODES[1]) {
+        if (player.abilitiesInUse?.includes(ABILITIES[6])) {
+          runSneakPeek(player.id, e, color);
+          return;
+        }
+
+        if (player.abilitiesInUse?.includes(ABILITIES[4])) {
+          selectField(e, color, true);
+          deletePlayerAbilityInUse(player.id, ABILITIES[4]);
+        }
       }
 
       selectField(e, color);

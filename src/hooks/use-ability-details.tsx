@@ -5,6 +5,7 @@ import {
   Drama,
   Grid2x2Check,
   Equal,
+  ScanEye,
 } from "lucide-react";
 import type { Ability } from "@/constants";
 
@@ -52,6 +53,12 @@ const useAbilityDetails = () => {
         title: "Balance Equalizer",
         description:
           "Equalize your balance with the player who currently has the closest balance to yours.",
+      },
+      sneakPeek: {
+        icon: <ScanEye />,
+        title: "Sneak Peek",
+        description:
+          "Check the three hidden fields of your choice to see if the effect is positive (green border) or negative (red border).",
       },
     };
 
