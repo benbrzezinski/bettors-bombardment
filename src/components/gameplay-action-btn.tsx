@@ -30,7 +30,7 @@ export default function GameplayActionBtn({
   const router = useRouter();
 
   if (
-    gameMode === GAME_MODES[1] &&
+    (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) &&
     player.abilitiesInUse?.includes(ABILITIES[2])
   ) {
     const playerAfterNextPlayer = nextPlayerExists(2);

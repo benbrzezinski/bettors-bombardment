@@ -23,7 +23,8 @@ import SelectNumberOfPlayers from "@/components/select-number-of-players";
 import PlayersData from "@/components/players-data";
 import SelectAmountOfRounds from "@/components/select-amount-of-rounds";
 import SelectGameMode from "@/components/select-game-mode";
-import useStore from "@/store";
+import useStore, { type Player } from "@/store";
+import useAbilities from "@/hooks/use-abilities";
 
 export interface PlayerData {
   name: string;
@@ -36,6 +37,7 @@ export default function CardCustomize() {
   );
   const [playersData, setPlayersData] = useState<PlayerData[]>([]);
   const { amountOfRounds, gameMode, setPlayers } = useStore();
+  const { getRandomizedAbilities } = useAbilities();
   const router = useRouter();
 
   useEffect(() => {
@@ -73,18 +75,26 @@ export default function CardCustomize() {
       return;
     }
 
-    const players =
+    const players: Player[] =
       gameMode === GAME_MODES[0]
         ? playersData.map(data => ({
             id: nanoid(),
             name: data.name.trim(),
             value: parseInt(data.value),
           }))
-        : playersData.map(data => ({
+        : gameMode === GAME_MODES[1]
+        ? playersData.map(data => ({
             id: nanoid(),
             name: data.name.trim(),
             value: parseInt(data.value),
             abilities: [...ABILITIES],
+            abilitiesInUse: [] as Ability[],
+          }))
+        : playersData.map(data => ({
+            id: nanoid(),
+            name: data.name.trim(),
+            value: parseInt(data.value),
+            abilities: getRandomizedAbilities(),
             abilitiesInUse: [] as Ability[],
           }));
 

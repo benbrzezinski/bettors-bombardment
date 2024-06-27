@@ -23,7 +23,7 @@ export default function AbilitiesMenu({ player, betMade }: AbilitiesMenuProps) {
   const { gameMode } = useStore();
 
   return (
-    gameMode === GAME_MODES[1] && (
+    (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) && (
       <Sheet>
         <SheetTrigger asChild>
           <Button

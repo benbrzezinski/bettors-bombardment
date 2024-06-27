@@ -4,7 +4,11 @@ export type NumberOfPlayers = (typeof NUMBER_OF_PLAYERS)[number];
 export const AMOUNT_OF_ROUNDS = [3, 4, 5, 6, 7, 8, 9, 10] as const;
 export type AmountOfRounds = (typeof AMOUNT_OF_ROUNDS)[number];
 
-export const GAME_MODES = ["Normal", "Abilities"] as const;
+export const GAME_MODES = [
+  "Normal",
+  "Abilities",
+  "Randomized Abilities",
+] as const;
 export type GameMode = (typeof GAME_MODES)[number];
 
 export const ABILITIES = [

@@ -72,7 +72,7 @@ export default function HiddenFields({
     let effectValue = value * currentRound;
 
     if (
-      gameMode === GAME_MODES[1] &&
+      (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) &&
       player.abilitiesInUse?.includes(ABILITIES[0])
     ) {
       effectValue *= 10;
@@ -87,7 +87,7 @@ export default function HiddenFields({
     updatePlayerBalance(player.id, betValueParsed, effectValue, operation);
 
     if (
-      gameMode === GAME_MODES[1] &&
+      (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) &&
       player.abilitiesInUse?.includes(ABILITIES[1])
     ) {
       deletePlayerAbilityInUse(player.id, ABILITIES[1]);
@@ -110,7 +110,7 @@ export default function HiddenFields({
 
   const handleClickField =
     (color: Color) => (e: MouseEvent<HTMLButtonElement>) => {
-      if (gameMode === GAME_MODES[1]) {
+      if (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) {
         if (player.abilitiesInUse?.includes(ABILITIES[6])) {
           runSneakPeek(player.id, e, color);
           return;

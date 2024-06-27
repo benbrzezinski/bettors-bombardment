@@ -1,14 +1,28 @@
 import { MouseEvent, useState } from "react";
 import { MATH_OPERATIONS, colorEffects } from "@/data/color-effects";
-import { ABILITIES, COLORS, type Color } from "@/constants";
-import { sortPlayers } from "@/lib/utils";
+import { ABILITIES, type Ability, COLORS, type Color } from "@/constants";
+import { sortPlayers, getRandomInt } from "@/lib/utils";
 import useStore from "@/store";
 
 const useAbilities = () => {
   const [sneakPeekQuantity, setSneakPeekQuantity] = useState(0);
   const { players, updatePlayerBalance, deletePlayerAbilityInUse } = useStore();
-
   const sortedPlayers = sortPlayers(players);
+
+  const getRandomizedAbilities = () => {
+    const randomizedAbilities: Ability[] = [];
+
+    while (randomizedAbilities.length < 3) {
+      const randomIndex = getRandomInt(0, ABILITIES.length - 1);
+      const ability = ABILITIES[randomIndex];
+
+      if (randomizedAbilities.includes(ability)) continue;
+
+      randomizedAbilities.push(ability);
+    }
+
+    return randomizedAbilities;
+  };
 
   const runLuckThief = (id: string, value: number) => {
     const playersWithTheHighestBalance = sortedPlayers.filter(
@@ -124,13 +138,19 @@ const useAbilities = () => {
   };
 
   const runBalanceBooster = (id: string, value: number) => {
-    const randomBooster = Math.floor(Math.random() * 41) + 10;
+    const randomBooster = getRandomInt(10, 50);
     const randomBoost = Math.round((value / 10) * (randomBooster / 10));
 
     updatePlayerBalance(id, value, randomBoost, MATH_OPERATIONS.Addition);
   };
 
-  return { runLuckThief, runBalanceEqualizer, runSneakPeek, runBalanceBooster };
+  return {
+    getRandomizedAbilities,
+    runLuckThief,
+    runBalanceEqualizer,
+    runSneakPeek,
+    runBalanceBooster,
+  };
 };
 
 export default useAbilities;

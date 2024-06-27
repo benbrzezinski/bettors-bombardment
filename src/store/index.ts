@@ -79,7 +79,8 @@ const useStore = create<State>(set => ({
         }
 
         if (
-          state.gameMode === GAME_MODES[1] &&
+          (state.gameMode === GAME_MODES[1] ||
+            state.gameMode === GAME_MODES[2]) &&
           player.abilitiesInUse?.includes(ABILITIES[1]) &&
           player.value === 0
         ) {

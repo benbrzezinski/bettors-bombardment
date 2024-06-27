@@ -67,7 +67,7 @@ export default function Abilities({
   };
 
   return (
-    gameMode === GAME_MODES[1] && (
+    (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) && (
       <ul className="flex justify-center flex-wrap gap-[20px]">
         {ABILITIES.map(ability => {
           const details = getAbilityDetails(ability);

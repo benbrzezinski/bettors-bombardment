@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { COLORS, type Color } from "@/constants";
+import { getRandomInt } from "@/lib/utils";
 
 const useColorEffects = () => {
   const [magicColors, setMagicColors] = useState<Color[]>([]);
@@ -8,7 +9,7 @@ const useColorEffects = () => {
     const randomColors: Color[] = [];
 
     while (randomColors.length < 100) {
-      const randomIndex = Math.floor(Math.random() * COLORS.length);
+      const randomIndex = getRandomInt(0, COLORS.length - 1);
       const color = COLORS[randomIndex];
       const colorEndGame = COLORS[0];
       const colorBigWin = COLORS[1];

@@ -56,6 +56,34 @@ export default function CardInstructions() {
               If your balance drops to zero, you are out of the game.
             </AccordionContent>
           </AccordionItem>
+          <AccordionItem value="game-modes">
+            <AccordionTrigger>
+              What do the different game modes involve?
+            </AccordionTrigger>
+            <AccordionContent>
+              <ul className="flex flex-col gap-[10px] list-disc pl-[16px]">
+                <li>
+                  <p>
+                    <span className="font-medium">Normal</span> - Players play
+                    in the standard way, without additional modifications or
+                    special rules.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <span className="font-medium">Abilities</span> - Each player
+                    has all the abilities at their disposal.
+                  </p>
+                </li>
+                <li>
+                  <p>
+                    <span className="font-medium">Randomized Abilities</span> -
+                    Each player has only 3 random abilities at their disposal.
+                  </p>
+                </li>
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
       </CardContent>
       <CardFooter className="justify-center">
