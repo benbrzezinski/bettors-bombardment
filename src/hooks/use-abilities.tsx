@@ -123,7 +123,14 @@ const useAbilities = () => {
     setSneakPeekQuantity(q => q + 1);
   };
 
-  return { runLuckThief, runBalanceEqualizer, runSneakPeek };
+  const runBalanceBooster = (id: string, value: number) => {
+    const randomBooster = Math.floor(Math.random() * 41) + 10;
+    const randomBoost = Math.round((value / 10) * (randomBooster / 10));
+
+    updatePlayerBalance(id, value, randomBoost, MATH_OPERATIONS.Addition);
+  };
+
+  return { runLuckThief, runBalanceEqualizer, runSneakPeek, runBalanceBooster };
 };
 
 export default useAbilities;

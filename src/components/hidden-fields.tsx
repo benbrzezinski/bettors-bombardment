@@ -95,8 +95,8 @@ export default function HiddenFields({
 
     if (isRepetitive && player.value > 0) {
       if (betValueParsed > player.value) {
-        betValueRef.current = player.value.toString();
         setBetValue(player.value.toString());
+        betValueRef.current = player.value.toString();
       }
 
       return;

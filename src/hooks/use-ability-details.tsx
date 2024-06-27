@@ -6,6 +6,7 @@ import {
   Grid2x2Check,
   Equal,
   ScanEye,
+  HandCoins,
 } from "lucide-react";
 import type { Ability } from "@/constants";
 
@@ -59,6 +60,12 @@ const useAbilityDetails = () => {
         title: "Sneak Peek",
         description:
           "Check the three hidden fields of your choice to see if the effect is positive (green border) or negative (red border).",
+      },
+      balanceBooster: {
+        icon: <HandCoins />,
+        title: "Balance Booster",
+        description:
+          "Instantly increase your balance by a random amount between 10% and 50% of your current balance.",
       },
     };
 

@@ -15,6 +15,7 @@ export const ABILITIES = [
   "doubleTrouble",
   "balanceEqualizer",
   "sneakPeek",
+  "balanceBooster",
 ] as const;
 export type Ability = (typeof ABILITIES)[number];
 

@@ -19,8 +19,8 @@ export default function PlayersData({
   setPlayersData,
 }: PlayersDataProps) {
   const handlePlayerChange = (index: number, field: string, value: string) => {
-    const updatedPlayersData = playersData.map((p, i) =>
-      i === index ? { ...p, [field]: value } : p
+    const updatedPlayersData = playersData.map((playerData, i) =>
+      i === index ? { ...playerData, [field]: value } : playerData
     );
 
     setPlayersData(updatedPlayersData);
@@ -44,7 +44,7 @@ export default function PlayersData({
         <li className="flex gap-[11px]">
           <span className="align-middle text-muted-foreground">*</span>
           <CardDescription>
-            Value can only contain digits and must be a positive integer.
+            Balance can only contain digits and must be a positive integer.
           </CardDescription>
         </li>
       </ul>

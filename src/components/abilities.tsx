@@ -42,7 +42,8 @@ export default function Abilities({
 }: AbilitiesProps) {
   const { gameMode, deletePlayerAbility, addPlayerAbilityInUse } = useStore();
   const { getAbilityDetails } = useAbilityDetails();
-  const { runLuckThief, runBalanceEqualizer } = useAbilities();
+  const { runLuckThief, runBalanceEqualizer, runBalanceBooster } =
+    useAbilities();
 
   const handleUseAbility = (ability: Ability) => {
     deletePlayerAbility(id, ability);
@@ -54,6 +55,11 @@ export default function Abilities({
 
     if (ability === ABILITIES[5]) {
       runBalanceEqualizer(id);
+      return;
+    }
+
+    if (ability === ABILITIES[7]) {
+      runBalanceBooster(id, value);
       return;
     }
 
