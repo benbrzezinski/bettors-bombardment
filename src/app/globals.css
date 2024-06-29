@@ -47,8 +47,17 @@
     user-select: none;
   }
 
+  div[role="dialog"] {
+    overflow-y: auto;
+  }
+
   div[role="alertdialog"] {
     width: 90%;
     border-radius: var(--radius);
+  }
+
+  div[data-radix-popper-content-wrapper] > div[role="listbox"] {
+    max-height: 250px;
+    overflow-y: auto;
   }
 }

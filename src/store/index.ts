@@ -13,6 +13,7 @@ export interface Player {
   id: string;
   name: string;
   value: number;
+  prevValue?: number;
   abilities?: Ability[];
   abilitiesInUse?: Ability[];
 }
@@ -30,6 +31,8 @@ interface State {
   currentRound: number;
   gameMode: GameMode;
   setPlayers: (players: Player[]) => void;
+  setPlayerBalance: (id: string, value: number) => void;
+  setPlayerPrevBalance: (id: string, prevValue: number) => void;
   updatePlayerBalance: (
     id: string,
     betValue: number,
@@ -56,6 +59,28 @@ const initialState: InitialState = {
 const useStore = create<State>(set => ({
   ...initialState,
   setPlayers: players => set({ players }),
+  setPlayerBalance: (id, value) =>
+    set(state => {
+      const updatedPlayers = [...state.players];
+      const player = updatedPlayers.find(p => p.id === id);
+
+      if (player) {
+        player.value = value;
+      }
+
+      return { players: updatedPlayers };
+    }),
+  setPlayerPrevBalance: (id, prevValue) =>
+    set(state => {
+      const updatedPlayers = [...state.players];
+      const player = updatedPlayers.find(p => p.id === id);
+
+      if (player) {
+        player.prevValue = prevValue;
+      }
+
+      return { players: updatedPlayers };
+    }),
   updatePlayerBalance: (id, betValue, effectValue, operation) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -79,12 +104,17 @@ const useStore = create<State>(set => ({
         }
 
         if (
-          (state.gameMode === GAME_MODES[1] ||
-            state.gameMode === GAME_MODES[2]) &&
-          player.abilitiesInUse?.includes(ABILITIES[1]) &&
-          player.value === 0
+          state.gameMode === GAME_MODES[1] ||
+          state.gameMode === GAME_MODES[2]
         ) {
-          player.value = Math.round(originalValue / 2);
+          if (
+            player.abilitiesInUse?.includes(ABILITIES[1]) &&
+            player.value === 0
+          ) {
+            player.value = Math.round(originalValue / 2);
+          }
+
+          state.setPlayerPrevBalance(player.id, originalValue);
         }
       }
 

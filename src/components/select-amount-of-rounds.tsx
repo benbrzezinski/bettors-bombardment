@@ -27,7 +27,7 @@ export default function SelectAmountOfRounds() {
         <SelectTrigger id="rounds">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
-        <SelectContent position="popper">
+        <SelectContent>
           {AMOUNT_OF_ROUNDS.map(n => (
             <SelectItem value={n.toString()} key={n}>
               {n}

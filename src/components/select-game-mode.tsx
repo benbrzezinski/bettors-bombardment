@@ -27,7 +27,7 @@ export default function SelectGameMode() {
         <SelectTrigger id="mode">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent position="popper">
+        <SelectContent>
           {GAME_MODES.map(mode => (
             <SelectItem value={mode} key={mode}>
               {mode}

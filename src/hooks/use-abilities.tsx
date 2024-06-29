@@ -6,7 +6,12 @@ import useStore from "@/store";
 
 const useAbilities = () => {
   const [sneakPeekQuantity, setSneakPeekQuantity] = useState(0);
-  const { players, updatePlayerBalance, deletePlayerAbilityInUse } = useStore();
+  const {
+    players,
+    setPlayerBalance,
+    updatePlayerBalance,
+    deletePlayerAbilityInUse,
+  } = useStore();
   const sortedPlayers = sortPlayers(players);
 
   const getRandomizedAbilities = () => {
@@ -144,12 +149,21 @@ const useAbilities = () => {
     updatePlayerBalance(id, value, randomBoost, MATH_OPERATIONS.Addition);
   };
 
+  const runTimeWarp = (id: string) => {
+    const player = players.find(p => p.id === id);
+
+    if (player && player.prevValue) {
+      setPlayerBalance(player.id, player.prevValue);
+    }
+  };
+
   return {
     getRandomizedAbilities,
     runLuckThief,
     runBalanceEqualizer,
     runSneakPeek,
     runBalanceBooster,
+    runTimeWarp,
   };
 };
 

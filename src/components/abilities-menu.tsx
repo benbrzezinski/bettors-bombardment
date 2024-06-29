@@ -33,24 +33,14 @@ export default function AbilitiesMenu({ player, betMade }: AbilitiesMenuProps) {
             <WandSparkles />
           </Button>
         </SheetTrigger>
-        <SheetContent
-          className="overflow-y-auto"
-          side="left"
-          onOpenAutoFocus={e => e.preventDefault()}
-        >
+        <SheetContent side="left" onOpenAutoFocus={e => e.preventDefault()}>
           <SheetHeader className="mb-[20px]">
             <SheetTitle>Abilities</SheetTitle>
             <SheetDescription>
               Note: Each skill can only be used once.
             </SheetDescription>
           </SheetHeader>
-          <Abilities
-            id={player.id}
-            value={player.value}
-            abilities={player.abilities}
-            abilitiesInUse={player.abilitiesInUse}
-            betMade={betMade}
-          />
+          <Abilities player={player} betMade={betMade} />
         </SheetContent>
       </Sheet>
     )

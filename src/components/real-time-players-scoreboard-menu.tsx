@@ -30,10 +30,7 @@ export default function RealTimePlayersScoreboardMenu() {
           <Users />
         </Button>
       </SheetTrigger>
-      <SheetContent
-        className="overflow-y-auto"
-        onOpenAutoFocus={e => e.preventDefault()}
-      >
+      <SheetContent onOpenAutoFocus={e => e.preventDefault()}>
         <SheetHeader className="mb-[20px]">
           <SheetTitle>Player&rsquo;s Scoreboard</SheetTitle>
           <SheetDescription>

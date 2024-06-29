@@ -7,6 +7,7 @@ import {
   Equal,
   ScanEye,
   HandCoins,
+  History,
 } from "lucide-react";
 import type { Ability } from "@/constants";
 
@@ -66,6 +67,11 @@ const useAbilityDetails = () => {
         title: "Balance Booster",
         description:
           "Instantly increase your balance by a random amount between 10% and 50% of your current balance.",
+      },
+      timeWarp: {
+        icon: <History />,
+        title: "Time Warp",
+        description: "Undo the last balance change.",
       },
     };
 

@@ -21,29 +21,28 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { ABILITIES, GAME_MODES, type Ability } from "@/constants";
 import { cn } from "@/lib/utils";
-import useStore from "@/store";
+import useStore, { type Player } from "@/store";
 import useAbilityDetails from "@/hooks/use-ability-details";
 import useAbilities from "@/hooks/use-abilities";
 
 interface AbilitiesProps {
-  id: string;
-  value: number;
-  abilities?: Ability[];
-  abilitiesInUse?: Ability[];
+  player: Player;
   betMade: boolean;
 }
 
-export default function Abilities({
-  id,
-  value,
-  abilities,
-  abilitiesInUse,
-  betMade,
-}: AbilitiesProps) {
+export default function Abilities({ player, betMade }: AbilitiesProps) {
+  const { id, value, prevValue, abilities, abilitiesInUse } = player;
   const { gameMode, deletePlayerAbility, addPlayerAbilityInUse } = useStore();
   const { getAbilityDetails } = useAbilityDetails();
-  const { runLuckThief, runBalanceEqualizer, runBalanceBooster } =
+  const { runLuckThief, runBalanceEqualizer, runBalanceBooster, runTimeWarp } =
     useAbilities();
+
+  const PRE_MOVE_ABILITIES: Ability[] = [
+    ABILITIES[0],
+    ABILITIES[1],
+    ABILITIES[4],
+    ABILITIES[6],
+  ];
 
   const handleUseAbility = (ability: Ability) => {
     deletePlayerAbility(id, ability);
@@ -63,6 +62,11 @@ export default function Abilities({
       return;
     }
 
+    if (ability === ABILITIES[8]) {
+      runTimeWarp(id);
+      return;
+    }
+
     addPlayerAbilityInUse(id, ability);
   };
 
@@ -73,6 +77,9 @@ export default function Abilities({
           const details = getAbilityDetails(ability);
           const isAbilityAvailable = abilities?.includes(ability);
           const isAbilityInUse = abilitiesInUse?.includes(ability);
+          const isDisabled = PRE_MOVE_ABILITIES.includes(ability)
+            ? betMade
+            : value === 0;
 
           return (
             <TooltipProvider delayDuration={500} key={ability}>
@@ -87,7 +94,7 @@ export default function Abilities({
                             isAbilityInUse && "disabled:opacity-100"
                           )}
                           variant={isAbilityInUse ? "default" : "outline"}
-                          disabled={!isAbilityAvailable || betMade}
+                          disabled={!isAbilityAvailable || isDisabled}
                         >
                           {details.icon}
                           {!isAbilityAvailable && !isAbilityInUse && (
@@ -104,9 +111,16 @@ export default function Abilities({
                           <AlertDialogTitle>{details.title}</AlertDialogTitle>
                           <AlertDialogDescription>
                             {details.description}
-                            <span className="block font-medium text-destructive mt-[5px]">
-                              It can only be used once!
-                            </span>
+                          </AlertDialogDescription>
+                          {ability === ABILITIES[8] && (
+                            <AlertDialogDescription style={{ marginTop: 0 }}>
+                              {typeof prevValue === "number"
+                                ? `Balance status before last change: ${prevValue}$.`
+                                : "Balance status is unchanged."}
+                            </AlertDialogDescription>
+                          )}
+                          <AlertDialogDescription className="font-medium text-destructive">
+                            It can only be used once!
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>

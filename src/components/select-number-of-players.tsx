@@ -33,7 +33,7 @@ export default function SelectNumberOfPlayers({
         <SelectTrigger id="players">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
-        <SelectContent position="popper">
+        <SelectContent>
           {NUMBER_OF_PLAYERS.map(n => (
             <SelectItem value={n.toString()} key={n}>
               {n}
