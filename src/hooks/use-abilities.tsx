@@ -14,19 +14,17 @@ const useAbilities = () => {
   } = useStore();
   const sortedPlayers = sortPlayers(players);
 
-  const getRandomizedAbilities = () => {
-    const randomizedAbilities: Ability[] = [];
+  const generateRandomizedAbilities = () => {
+    const randomAbilities: Ability[] = [];
 
-    while (randomizedAbilities.length < 3) {
+    while (randomAbilities.length < 3) {
       const randomIndex = getRandomInt(0, ABILITIES.length - 1);
       const ability = ABILITIES[randomIndex];
-
-      if (randomizedAbilities.includes(ability)) continue;
-
-      randomizedAbilities.push(ability);
+      if (randomAbilities.includes(ability)) continue;
+      randomAbilities.push(ability);
     }
 
-    return randomizedAbilities;
+    return randomAbilities;
   };
 
   const runLuckThief = (id: string, value: number) => {
@@ -158,7 +156,7 @@ const useAbilities = () => {
   };
 
   return {
-    getRandomizedAbilities,
+    generateRandomizedAbilities,
     runLuckThief,
     runBalanceEqualizer,
     runSneakPeek,

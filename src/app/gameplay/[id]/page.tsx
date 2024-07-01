@@ -27,13 +27,13 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
   const [betMade, setBetMade] = useState(false);
   const [forceRender, setForceRender] = useState(0);
   const { players } = useStore();
-  const { magicColors, generateRandomColors } = useColorEffects();
+  const { magicColors, generateRandomizedColors } = useColorEffects();
 
   const player = players.find(p => p.id === params.id);
 
   useEffect(() => {
-    generateRandomColors();
-  }, [generateRandomColors, forceRender]);
+    generateRandomizedColors();
+  }, [generateRandomizedColors, forceRender]);
 
   useEffect(() => {
     setBetValue("");

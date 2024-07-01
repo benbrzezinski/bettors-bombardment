@@ -72,13 +72,13 @@ export default function CardInstructions() {
                 <li>
                   <p>
                     <span className="font-medium">Abilities</span> - Each player
-                    has all the abilities at their disposal.
+                    has all the available abilities at their disposal.
                   </p>
                 </li>
                 <li>
                   <p>
                     <span className="font-medium">Randomized Abilities</span> -
-                    Each player has only 3 random abilities at their disposal.
+                    Each player has 3 random abilities at their disposal.
                   </p>
                 </li>
               </ul>

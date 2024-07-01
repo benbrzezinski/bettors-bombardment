@@ -37,7 +37,7 @@ export default function CardCustomize() {
   );
   const [playersData, setPlayersData] = useState<PlayerData[]>([]);
   const { amountOfRounds, gameMode, setPlayers } = useStore();
-  const { getRandomizedAbilities } = useAbilities();
+  const { generateRandomizedAbilities } = useAbilities();
   const router = useRouter();
 
   useEffect(() => {
@@ -94,7 +94,7 @@ export default function CardCustomize() {
             id: nanoid(),
             name: data.name.trim(),
             value: parseInt(data.value),
-            abilities: getRandomizedAbilities(),
+            abilities: generateRandomizedAbilities(),
             abilitiesInUse: [] as Ability[],
           }));
 
