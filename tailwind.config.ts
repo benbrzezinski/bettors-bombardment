@@ -1,3 +1,4 @@
+import defaultTheme from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
 const config = {
@@ -10,11 +11,12 @@ const config = {
   ],
   prefix: "",
   theme: {
+    screens: {
+      xs: "350px",
+      ...defaultTheme.screens,
+    },
     container: {
       center: true,
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
       colors: {

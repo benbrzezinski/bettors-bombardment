@@ -69,9 +69,8 @@ export default function DefeatPopupMessage({
             Eliminated
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Your balance has been cleared. You have been removed from the game
-            and you can no longer participate in this game, continue by clicking
-            the button below.
+            Your balance has been cleared, and you have been removed from the
+            game. To continue, click the button below.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

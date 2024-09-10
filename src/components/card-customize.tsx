@@ -105,8 +105,10 @@ export default function CardCustomize() {
   return (
     <Card className="w-full cursor-default">
       <CardHeader className="items-center">
-        <CardTitle>Customize Your Game</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-[22px] xs:text-2xl">
+          Customize Your Game
+        </CardTitle>
+        <CardDescription className="text-xs xs:text-sm">
           Set the desired settings in one-moment.
         </CardDescription>
       </CardHeader>

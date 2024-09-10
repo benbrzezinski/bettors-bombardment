@@ -42,8 +42,8 @@ export default function QuitBtn() {
         <AlertDialogHeader>
           <AlertDialogTitle>Do you want to quit the game?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently end the current
-            game and delete all players and their data.
+            This action cannot be undone. It will permanently end the current
+            game and delete all players and their scores.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

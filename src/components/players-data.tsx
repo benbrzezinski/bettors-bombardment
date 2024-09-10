@@ -71,6 +71,7 @@ export default function PlayersData({
             type="text"
             id={`player-${i}-value`}
             name="value"
+            inputMode="numeric"
             value={value}
             placeholder="Initial balance"
             maxLength={7}

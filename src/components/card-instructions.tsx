@@ -17,8 +17,10 @@ export default function CardInstructions() {
   return (
     <Card className="w-full cursor-default">
       <CardHeader className="items-center">
-        <CardTitle>Instructions</CardTitle>
-        <CardDescription>Answers to fundamental questions.</CardDescription>
+        <CardTitle className="text-[22px] xs:text-2xl">Instructions</CardTitle>
+        <CardDescription className="text-[12px] xs:text-sm">
+          Answers to fundamental questions.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible>
@@ -87,7 +89,9 @@ export default function CardInstructions() {
         </Accordion>
       </CardContent>
       <CardFooter className="justify-center">
-        <p>Good luck, and play strategically!</p>
+        <p className="text-[15px] xs:text-base">
+          Good luck, and play strategically!
+        </p>
       </CardFooter>
     </Card>
   );
