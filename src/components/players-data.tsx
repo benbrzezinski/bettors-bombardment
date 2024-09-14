@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction } from "react";
 import { CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { PlayerData } from "@/components/card-customize";
+import type { PlayerData } from "@/components/card-customization";
 import type { NumberOfPlayers } from "@/constants";
 
 interface PlayersDataProps {

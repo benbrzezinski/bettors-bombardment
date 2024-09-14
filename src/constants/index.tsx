@@ -49,3 +49,6 @@ export const COLORS = [
   "lightcoral",
 ] as const;
 export type Color = (typeof COLORS)[number];
+
+export const LANGUAGES = ["en", "pl"] as const;
+export type Language = (typeof LANGUAGES)[number];

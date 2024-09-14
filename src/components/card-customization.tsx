@@ -19,6 +19,7 @@ import {
   type NumberOfPlayers,
   type Ability,
 } from "@/constants";
+import SelectLanguage from "@/components/select-language";
 import SelectNumberOfPlayers from "@/components/select-number-of-players";
 import PlayersData from "@/components/players-data";
 import SelectAmountOfRounds from "@/components/select-amount-of-rounds";
@@ -31,7 +32,7 @@ export interface PlayerData {
   value: string;
 }
 
-export default function CardCustomize() {
+export default function CardCustomization() {
   const [numberOfPlayers, setNumberOfPlayers] = useState<0 | NumberOfPlayers>(
     0
   );
@@ -104,6 +105,9 @@ export default function CardCustomize() {
 
   return (
     <Card className="w-full cursor-default">
+      <div className="flex justify-center p-6 pb-0">
+        <SelectLanguage />
+      </div>
       <CardHeader className="items-center">
         <CardTitle className="text-[22px] xs:text-2xl">
           Customize Your Game
