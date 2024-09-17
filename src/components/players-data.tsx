@@ -5,19 +5,20 @@ import { CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { PlayerData } from "@/components/card-customization";
-import type { NumberOfPlayers } from "@/constants";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface PlayersDataProps {
-  numberOfPlayers: 0 | NumberOfPlayers;
   playersData: PlayerData[];
   setPlayersData: Dispatch<SetStateAction<PlayerData[]>>;
 }
 
 export default function PlayersData({
-  numberOfPlayers,
   playersData,
   setPlayersData,
 }: PlayersDataProps) {
+  const { lng } = useTranslation();
+
   const handlePlayerChange = (index: number, field: string, value: string) => {
     const updatedPlayersData = playersData.map((playerData, i) =>
       i === index ? { ...playerData, [field]: value } : playerData
@@ -26,38 +27,40 @@ export default function PlayersData({
     setPlayersData(updatedPlayersData);
   };
 
-  return numberOfPlayers ? (
+  return (
     <div className="flex flex-col gap-[20px]">
       <ul className="flex flex-col gap-[5px]">
         <li className="flex gap-[11px]">
           <span className="align-middle text-muted-foreground">*</span>
           <CardDescription>
-            Player names must be unique, regardless of case sensitive.
+            {t[lng].cardCustomization.conditions[0]}
           </CardDescription>
         </li>
         <li className="flex gap-[11px]">
           <span className="align-middle text-muted-foreground">*</span>
           <CardDescription>
-            Name can only contain basic letters [A-Z].
+            {t[lng].cardCustomization.conditions[1]}
           </CardDescription>
         </li>
         <li className="flex gap-[11px]">
           <span className="align-middle text-muted-foreground">*</span>
           <CardDescription>
-            Balance can only contain digits and must be a positive integer.
+            {t[lng].cardCustomization.conditions[2]}
           </CardDescription>
         </li>
       </ul>
       {playersData.map(({ name, value }, i) => (
         <div className="flex flex-col gap-[6px]" key={i}>
-          <p className="text-lg mb-[4px]">Bettor {i + 1}</p>
-          <Label htmlFor={`player-${i}-name`}>Name</Label>
+          <p className="text-lg mb-[4px]">{`${t[lng].bettor} ${i + 1}`}</p>
+          <Label htmlFor={`player-${i}-name`}>
+            {t[lng].cardCustomization.name}
+          </Label>
           <Input
             type="text"
             id={`player-${i}-name`}
             name="name"
             value={name}
-            placeholder="Nickname"
+            placeholder={t[lng].cardCustomization.namePlaceholder}
             maxLength={15}
             autoComplete="off"
             onChange={e => {
@@ -66,14 +69,14 @@ export default function PlayersData({
               handlePlayerChange(i, e.target.name, value);
             }}
           />
-          <Label htmlFor={`player-${i}-value`}>Balance</Label>
+          <Label htmlFor={`player-${i}-value`}>{t[lng].balance}</Label>
           <Input
             type="text"
             id={`player-${i}-value`}
             name="value"
             inputMode="numeric"
             value={value}
-            placeholder="Initial balance"
+            placeholder={t[lng].cardCustomization.balancePlaceholder}
             maxLength={7}
             autoComplete="off"
             onChange={e => {
@@ -85,5 +88,5 @@ export default function PlayersData({
         </div>
       ))}
     </div>
-  ) : null;
+  );
 }

@@ -12,6 +12,11 @@ export const GAME_MODES = [
   "Randomized Abilities",
 ] as const;
 export type GameMode = (typeof GAME_MODES)[number];
+export const GAME_MODES_PL = [
+  "Normalny",
+  "Zdolności",
+  "Losowe Zdolności",
+] as const;
 
 export const ABILITIES = [
   "testYourLuck",

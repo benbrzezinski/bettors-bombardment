@@ -10,6 +10,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { Dispatch, SetStateAction } from "react";
 import { NUMBER_OF_PLAYERS, type NumberOfPlayers } from "@/constants";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface SelectNumberOfPlayersProps {
   numberOfPlayers: 0 | NumberOfPlayers;
@@ -20,9 +22,13 @@ export default function SelectNumberOfPlayers({
   numberOfPlayers,
   setNumberOfPlayers,
 }: SelectNumberOfPlayersProps) {
+  const { lng } = useTranslation();
+
   return (
     <div className="flex flex-col gap-[6px]">
-      <Label htmlFor="players">Number of players</Label>
+      <Label htmlFor="players">
+        {t[lng].cardCustomization.numberOfPlayersLabel}
+      </Label>
       <Select
         name="number-of-players"
         value={numberOfPlayers === 0 ? undefined : numberOfPlayers.toString()}
@@ -31,7 +37,9 @@ export default function SelectNumberOfPlayers({
         }}
       >
         <SelectTrigger id="players">
-          <SelectValue placeholder="Select" />
+          <SelectValue
+            placeholder={t[lng].cardCustomization.selectPlaceholder}
+          />
         </SelectTrigger>
         <SelectContent>
           {NUMBER_OF_PLAYERS.map(n => (

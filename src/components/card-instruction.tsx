@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -12,75 +14,94 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
-export default function CardInstructions() {
+export default function CardInstruction() {
+  const { lng } = useTranslation();
+
   return (
     <Card className="w-full cursor-default">
       <CardHeader className="items-center">
-        <CardTitle className="text-[22px] xs:text-2xl">Instructions</CardTitle>
+        <CardTitle className="text-[22px] xs:text-2xl">
+          {t[lng].cardInstruction.title}
+        </CardTitle>
         <CardDescription className="text-[12px] xs:text-sm">
-          Answers to fundamental questions.
+          {t[lng].cardInstruction.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Accordion type="single" collapsible>
           <AccordionItem value="objective">
-            <AccordionTrigger>What is the objective?</AccordionTrigger>
+            <AccordionTrigger>
+              {t[lng].cardInstruction.questions.objective}
+            </AccordionTrigger>
             <AccordionContent>
-              Increase your balance by placing bets and selecting hidden fields.
+              {t[lng].cardInstruction.answers.objective}
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="gameplay">
-            <AccordionTrigger>What is the gameplay like?</AccordionTrigger>
+            <AccordionTrigger>
+              {t[lng].cardInstruction.questions.gameplay}
+            </AccordionTrigger>
             <AccordionContent>
               <ul className="flex flex-col gap-[10px] list-disc pl-[16px]">
                 <li>
-                  <p>Place bets on hidden fields.</p>
+                  <p>{t[lng].cardInstruction.answers.gameplay[0]}</p>
                 </li>
                 <li>
-                  <p>Click on a field to reveal its effect.</p>
+                  <p>{t[lng].cardInstruction.answers.gameplay[1]}</p>
                 </li>
                 <li>
-                  <p>Effects can either increase or decrease your balance.</p>
+                  <p>{t[lng].cardInstruction.answers.gameplay[2]}</p>
                 </li>
               </ul>
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="win">
-            <AccordionTrigger>Who wins?</AccordionTrigger>
+            <AccordionTrigger>
+              {t[lng].cardInstruction.questions.win}
+            </AccordionTrigger>
             <AccordionContent>
-              The player with the highest balance at the end wins.
+              {t[lng].cardInstruction.answers.win}
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="lose">
-            <AccordionTrigger>How can you lose?</AccordionTrigger>
+            <AccordionTrigger>
+              {t[lng].cardInstruction.questions.lose}
+            </AccordionTrigger>
             <AccordionContent>
-              If your balance drops to zero, you are out of the game.
+              {t[lng].cardInstruction.answers.lose}
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="game-modes">
             <AccordionTrigger>
-              What do the different game modes involve?
+              {t[lng].cardInstruction.questions.gameModes}
             </AccordionTrigger>
             <AccordionContent>
               <ul className="flex flex-col gap-[10px] list-disc pl-[16px]">
                 <li>
                   <p>
-                    <span className="font-medium">Normal</span> - Players play
-                    in the standard way, without additional modifications or
-                    special rules.
+                    <span className="font-medium">
+                      {t[lng].cardInstruction.answers.gameModes[0][0]}
+                    </span>{" "}
+                    - {t[lng].cardInstruction.answers.gameModes[0][1]}
                   </p>
                 </li>
                 <li>
                   <p>
-                    <span className="font-medium">Abilities</span> - Each player
-                    has all the available abilities at their disposal.
+                    <span className="font-medium">
+                      {t[lng].cardInstruction.answers.gameModes[1][0]}
+                    </span>{" "}
+                    - {t[lng].cardInstruction.answers.gameModes[1][1]}
                   </p>
                 </li>
                 <li>
                   <p>
-                    <span className="font-medium">Randomized Abilities</span> -
-                    Each player has 3 random abilities at their disposal.
+                    <span className="font-medium">
+                      {t[lng].cardInstruction.answers.gameModes[2][0]}
+                    </span>{" "}
+                    - {t[lng].cardInstruction.answers.gameModes[2][1]}
                   </p>
                 </li>
               </ul>
@@ -90,7 +111,7 @@ export default function CardInstructions() {
       </CardContent>
       <CardFooter className="justify-center">
         <p className="text-[15px] xs:text-base">
-          Good luck, and play strategically!
+          {t[lng].cardInstruction.footerText}
         </p>
       </CardFooter>
     </Card>
