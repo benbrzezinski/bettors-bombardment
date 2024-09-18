@@ -118,7 +118,7 @@ export default function CardCustomization() {
   };
 
   return (
-    <Card className="w-full cursor-default">
+    <Card className="w-full max-w-[500px] cursor-default">
       <div className="flex justify-center p-6 pb-0">
         <SelectLanguage />
       </div>

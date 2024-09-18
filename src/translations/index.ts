@@ -4,7 +4,7 @@ const t = {
     balance: "Balance",
     cardCustomization: {
       title: "Customize Your Game",
-      description: "Set the desired settings in one-moment.",
+      description: "Set your preferences in one moment.",
       numberOfPlayersLabel: "Number of players",
       selectPlaceholder: "Select",
       conditions: [
@@ -63,7 +63,7 @@ const t = {
     balance: "Saldo",
     cardCustomization: {
       title: "Dostosuj Swoją Grę",
-      description: "Ustaw pożądane opcje w mgnieniu oka.",
+      description: "Ustaw swoje preferencje w jednej chwili.",
       numberOfPlayersLabel: "Liczba graczy",
       selectPlaceholder: "Wybierz",
       conditions: [

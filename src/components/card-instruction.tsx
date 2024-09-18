@@ -21,7 +21,7 @@ export default function CardInstruction() {
   const { lng } = useTranslation();
 
   return (
-    <Card className="w-full cursor-default">
+    <Card className="w-full max-w-[500px] cursor-default">
       <CardHeader className="items-center">
         <CardTitle className="text-[22px] xs:text-2xl">
           {t[lng].cardInstruction.title}
