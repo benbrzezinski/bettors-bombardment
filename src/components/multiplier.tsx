@@ -6,9 +6,12 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import useStore from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 export default function Multiplier() {
   const { currentRound } = useStore();
+  const { lng } = useTranslation();
 
   return (
     <>
@@ -22,7 +25,7 @@ export default function Multiplier() {
           </p>
         </HoverCardTrigger>
         <HoverCardContent side="right">
-          Multiplier that applies to all drawn effects in this round.
+          {t[lng].multiplier.content}
         </HoverCardContent>
       </HoverCard>
       <div className="absolute top-[-8px] right-[-8px] size-[50px] border-t-2 border-r-2 border-red-700 rounded-tr-md pointer-events-none"></div>

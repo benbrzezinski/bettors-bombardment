@@ -51,7 +51,9 @@ export default function PlayersData({
       </ul>
       {playersData.map(({ name, value }, i) => (
         <div className="flex flex-col gap-[6px]" key={i}>
-          <p className="text-lg mb-[4px]">{`${t[lng].bettor} ${i + 1}`}</p>
+          <p className="text-lg mb-[4px]">
+            {t[lng].bettor} {i + 1}
+          </p>
           <Label htmlFor={`player-${i}-name`}>
             {t[lng].cardCustomization.name}
           </Label>

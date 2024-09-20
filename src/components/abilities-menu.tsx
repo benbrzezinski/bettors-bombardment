@@ -13,6 +13,8 @@ import { WandSparkles } from "lucide-react";
 import { GAME_MODES } from "@/constants";
 import Abilities from "@/components/abilities";
 import useStore, { type Player } from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface AbilitiesMenuProps {
   player: Player;
@@ -21,6 +23,7 @@ interface AbilitiesMenuProps {
 
 export default function AbilitiesMenu({ player, betMade }: AbilitiesMenuProps) {
   const { gameMode } = useStore();
+  const { lng } = useTranslation();
 
   return (
     (gameMode === GAME_MODES[1] || gameMode === GAME_MODES[2]) && (
@@ -35,9 +38,9 @@ export default function AbilitiesMenu({ player, betMade }: AbilitiesMenuProps) {
         </SheetTrigger>
         <SheetContent side="left" onOpenAutoFocus={e => e.preventDefault()}>
           <SheetHeader className="mb-[20px]">
-            <SheetTitle>Abilities</SheetTitle>
+            <SheetTitle>{t[lng].abilitiesMenu.title}</SheetTitle>
             <SheetDescription>
-              Note: Each skill can only be used once.
+              {t[lng].abilitiesMenu.description}
             </SheetDescription>
           </SheetHeader>
           <Abilities player={player} betMade={betMade} />

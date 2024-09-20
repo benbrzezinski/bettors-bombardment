@@ -16,9 +16,12 @@ import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMediaQuery } from "react-responsive";
 import useStore from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 export default function QuitBtn() {
   const { resetStore } = useStore();
+  const { lng } = useTranslation();
   const router = useRouter();
   const isSmallScreen = useMediaQuery({ query: "(max-width: 639px)" });
 
@@ -35,24 +38,23 @@ export default function QuitBtn() {
           className="animate-fade-in opacity-0 pointer-events-none absolute top-[10px] right-[10px] sm:top-[15px] sm:right-[15px] px-[10px] sm:px-[16px]"
         >
           <LogOut className="sm:mr-[10px]" />
-          {isSmallScreen ? "" : "Quit"}
+          {isSmallScreen ? "" : t[lng].quitBtn.action}
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Do you want to quit the game?</AlertDialogTitle>
+          <AlertDialogTitle>{t[lng].quitBtn.title}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. It will permanently end the current
-            game and delete all players and their scores.
+            {t[lng].quitBtn.description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{t[lng].cancel}</AlertDialogCancel>
           <AlertDialogAction
             className={buttonVariants({ variant: "destructive" })}
             onClick={quitGame}
           >
-            Quit
+            {t[lng].quitBtn.action}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

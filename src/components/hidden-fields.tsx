@@ -4,12 +4,13 @@ import { Dispatch, MouseEvent, SetStateAction, useRef } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
 import { colorEffects } from "@/data/color-effects";
-import { ABILITIES, GAME_MODES, type Color } from "@/constants";
+import { ABILITIES, GAME_MODES, LANGUAGES, type Color } from "@/constants";
 import useStore, { type Player } from "@/store";
 import useAbilities from "@/hooks/use-abilities";
+import useTranslation from "@/store/use-translation";
 
 interface HiddenFieldsProps {
-  magicColors: Color[];
+  colors: Color[];
   betValue: string;
   betSubmitted: boolean;
   betMade: boolean;
@@ -20,7 +21,7 @@ interface HiddenFieldsProps {
 }
 
 export default function HiddenFields({
-  magicColors,
+  colors,
   betValue,
   betSubmitted,
   betMade,
@@ -36,6 +37,7 @@ export default function HiddenFields({
     deletePlayerAbilityInUse,
   } = useStore();
   const { runSneakPeek } = useAbilities();
+  const { lng } = useTranslation();
   const betValueRef = useRef<string | null>(null);
   const betMadeRef = useRef(false);
 
@@ -56,12 +58,21 @@ export default function HiddenFields({
       betValueParsed > player.value ||
       betValueParsed < 1
     ) {
-      toast({
-        duration: 10000,
-        variant: "destructive",
-        title: "Uh, something went wrong!",
-        description: `Submit the amount you want to bet, remember that the bet value must be within the range of your balance: ${player.value}$.`,
-      });
+      if (lng === LANGUAGES[0]) {
+        toast({
+          duration: 10000,
+          variant: "destructive",
+          title: "Uh, something went wrong!",
+          description: `Submit the amount you want to bet, remember that the bet value must be within the range of your balance: ${player.value}$.`,
+        });
+      } else {
+        toast({
+          duration: 10000,
+          variant: "destructive",
+          title: "Oj, coś poszło nie tak!",
+          description: `Zatwierdź kwotę, którą chcesz postawić, pamiętaj, że wartość zakładu musi mieścić się w zakresie twojego salda: ${player.value}$.`,
+        });
+      }
 
       return;
     }
@@ -132,7 +143,7 @@ export default function HiddenFields({
         betMade && "pointer-events-none"
       )}
     >
-      {magicColors.map((color, i) => (
+      {colors.map((color, i) => (
         <li key={i}>
           <button
             type="button"

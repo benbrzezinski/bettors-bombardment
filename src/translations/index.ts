@@ -2,6 +2,7 @@ const t = {
   en: {
     bettor: "Bettor",
     balance: "Balance",
+    cancel: "Cancel",
     cardCustomization: {
       title: "Customize Your Game",
       description: "Set your preferences in one moment.",
@@ -56,11 +57,112 @@ const t = {
       },
       footerText: "Good luck, and play strategically!",
     },
-    gameInfo: {},
+    gameInfo: {
+      round: "Round",
+      bet: "Bet too large",
+    },
+    betValueInput: {
+      placeholder: "Value to bet",
+      submit: "Submit",
+      max: "Max",
+      reset: "Reset",
+    },
+    multiplier: {
+      content: "Multiplier that applies to all drawn effects in this round.",
+    },
+    gameplayActionBtn: {
+      nextBettor: "Next Bettor",
+      nextRound: "Next Round",
+      seeResults: "See Results",
+    },
+    abilitiesMenu: {
+      title: "Abilities",
+      description:
+        "Each ability can only be used once. Abilities related to hidden fields cannot be used after making a move.",
+    },
+    abilities: {
+      timeWarpLabels: [
+        "Balance status before last change:",
+        "Balance status is unchanged.",
+      ],
+      note: "It can only be used once!",
+      action: "Use",
+    },
+    abilityDetails: {
+      luckTrial: {
+        title: "Luck Trial",
+        description:
+          "Your next drawn effect is multiplied by 10, whether it is positive or negative.",
+      },
+      secondChance: {
+        title: "Second Chance",
+        description:
+          "You are protected from being zeroed out, but when this happens, your balance will be halved.",
+      },
+      turnStealer: {
+        title: "Turn Stealer",
+        description:
+          "The next player loses his turn. If this is used at the end of a round, the first player of the next round is skipped, if any.",
+      },
+      luckThief: {
+        title: "Luck Thief",
+        description:
+          "Steal 10% of the balance from the player who currently has the highest balance.",
+      },
+      doubleTrouble: {
+        title: "Double Trouble",
+        description:
+          "The effect of the next field you reveal is applied twice, whether it is positive or negative.",
+      },
+      balanceEqualizer: {
+        title: "Balance Equalizer",
+        description:
+          "Equalize your balance with the player who currently has the closest balance to yours.",
+      },
+      sneakPeek: {
+        title: "Sneak Peek",
+        description:
+          "Check the three hidden fields of your choice to see if the effect underneath them is positive (green border) or negative (red border).",
+      },
+      balanceBooster: {
+        title: "Balance Booster",
+        description:
+          "Instantly increase your balance by a random amount between 10% and 50% of your current balance.",
+      },
+      timeWarp: {
+        title: "Time Warp",
+        description: "Undo the last balance change.",
+      },
+    },
+    realTimePlayersScoreboardMenu: {
+      title: "Player Scoreboard",
+      description:
+        "Shows the current status of the results. Updates are made in real time.",
+    },
+    playersScoreboard: {
+      label: "Other Positions",
+      position: "Position",
+    },
+    defeatPopupMessage: {
+      title: "You lost",
+      description:
+        "Your balance has been cleared, and you have been removed from the game. To continue, click the button below.",
+    },
+    quitBtn: {
+      title: "Do you want to quit the game?",
+      description:
+        "This action cannot be undone. It will permanently end the current game and delete all players and their scores.",
+      action: "Quit",
+    },
+    playerNotFound: {
+      text: "Bettor not found. Please start the game again.",
+      restart: "Restart",
+    },
   },
   pl: {
     bettor: "Gracz",
     balance: "Saldo",
+    cancel: "Anuluj",
     cardCustomization: {
       title: "Dostosuj Swoją Grę",
       description: "Ustaw swoje preferencje w jednej chwili.",
@@ -114,6 +216,108 @@ const t = {
         ],
       },
       footerText: "Powodzenia i graj z rozwagą!",
+    },
+    gameInfo: {
+      round: "Runda",
+      bet: "Za duży zakład",
+    },
+    betValueInput: {
+      placeholder: "Wartość zakładu",
+      submit: "Zatwierdź",
+      max: "Maks",
+      reset: "Zresetuj",
+    },
+    multiplier: {
+      content:
+        "Mnożnik stosowany do wszystkich wylosowanych efektów w tej rundzie.",
+    },
+    gameplayActionBtn: {
+      nextBettor: "Następny Gracz",
+      nextRound: "Następna Runda",
+      seeResults: "Zobacz Wyniki",
+    },
+    abilitiesMenu: {
+      title: "Zdolności",
+      description:
+        "Każda zdolność może być użyta tylko raz. Zdolności związane z ukrytymi polami nie mogą być użyte po wykonaniu ruchu.",
+    },
+    abilities: {
+      timeWarpLabels: [
+        "Stan salda przed ostatnią zmianą:",
+        "Stan salda jest niezmieniony.",
+      ],
+      note: "Może być użyte tylko raz!",
+      action: "Użyj",
+    },
+    abilityDetails: {
+      luckTrial: {
+        title: "Próba Szczęścia",
+        description:
+          "Twój następny wylosowany efekt zostanie pomnożony przez 10, bez względu na to, czy jest pozytywny, czy negatywny.",
+      },
+      secondChance: {
+        title: "Druga Szansa",
+        description:
+          "Jesteś chroniony przed wyzerowaniem, ale gdy to nastąpi, twoje saldo zostanie zmniejszone o połowę.",
+      },
+      turnStealer: {
+        title: "Kradzież Tury",
+        description:
+          "Następny gracz traci swoją turę. Jeśli zostanie użyte na końcu rundy, pierwszy gracz w następnej rundzie zostanie pominięty, jeśli taki istnieje.",
+      },
+      luckThief: {
+        title: "Złodziej Szczęścia",
+        description:
+          "Skradnij 10% salda gracza, który ma obecnie największe saldo.",
+      },
+      doubleTrouble: {
+        title: "Podwójne Kłopoty",
+        description:
+          "Efekt następnego pola, które odkryjesz, zostanie zastosowany dwukrotnie, niezależnie od tego, czy jest pozytywny, czy negatywny.",
+      },
+      balanceEqualizer: {
+        title: "Wyrównywacz Salda",
+        description:
+          "Wyrównaj swoje saldo z graczem, który ma obecnie saldo najbliższe twojemu.",
+      },
+      sneakPeek: {
+        title: "Wstępny Wgląd",
+        description:
+          "Sprawdź trzy wybrane ukryte pola, aby zobaczyć, czy efekt znajdujący się pod nimi jest pozytywny (zielona ramka), czy negatywny (czerwona ramka).",
+      },
+      balanceBooster: {
+        title: "Dopalacz Salda",
+        description:
+          "Natychmiast zwiększ swoje saldo o losową wartość od 10% do 50% twojego obecnego salda.",
+      },
+      timeWarp: {
+        title: "Zakrzywienie Czasu",
+        description: "Cofnij ostatnią zmianę salda.",
+      },
+    },
+    realTimePlayersScoreboardMenu: {
+      title: "Tablica Wyników Graczy",
+      description:
+        "Pokazuje aktualny stan wyników. Aktualizacje są dokonywane w czasie rzeczywistym.",
+    },
+    playersScoreboard: {
+      label: "Kolejne Pozycje",
+      position: "Pozycja",
+    },
+    defeatPopupMessage: {
+      title: "Przegrałeś",
+      description:
+        "Twoje saldo zostało wyzerowane, a ty zostałeś usunięty z gry. Aby kontynuować, kliknij przycisk poniżej.",
+    },
+    quitBtn: {
+      title: "Czy chcesz wyjść z gry?",
+      description:
+        "Tej akcji nie można cofnąć. Trwale zakończy to bieżącą grę oraz usunie wszystkich graczy i ich wyniki.",
+      action: "Wyjdź",
+    },
+    playerNotFound: {
+      text: "Nie znaleziono gracza. Proszę rozpocząć grę ponownie.",
+      restart: "Uruchom ponownie",
     },
   },
 } as const;

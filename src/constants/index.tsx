@@ -19,9 +19,9 @@ export const GAME_MODES_PL = [
 ] as const;
 
 export const ABILITIES = [
-  "testYourLuck",
+  "luckTrial",
   "secondChance",
-  "skipNextPlayer",
+  "turnStealer",
   "luckThief",
   "doubleTrouble",
   "balanceEqualizer",

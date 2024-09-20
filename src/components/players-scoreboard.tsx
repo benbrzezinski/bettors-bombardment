@@ -9,6 +9,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { PlayersWithOptionalTies } from "@/lib/utils";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface PlayersScoreboardProps {
   playersWithOptionalTies: PlayersWithOptionalTies[];
@@ -17,27 +19,29 @@ interface PlayersScoreboardProps {
 
 export default function PlayersScoreboard({
   playersWithOptionalTies,
-  rawTable,
+  rawTable = false,
 }: PlayersScoreboardProps) {
+  const { lng } = useTranslation();
+
   return (
     playersWithOptionalTies.length > 0 && (
       <>
         {!rawTable && (
           <p className="font-bold text-3xl md:text-4xl cursor-default">
-            Other Positions
+            {t[lng].playersScoreboard.label}
           </p>
         )}
         <Table className="text-sm md:text-xl cursor-default">
           <TableHeader>
             <TableRow>
               <TableHead className="font-semibold text-center">
-                Position
+                {t[lng].playersScoreboard.position}
               </TableHead>
               <TableHead className="font-semibold text-center">
-                Bettor
+                {t[lng].bettor}
               </TableHead>
               <TableHead className="font-semibold text-center">
-                Balance
+                {t[lng].balance}
               </TableHead>
             </TableRow>
           </TableHeader>
