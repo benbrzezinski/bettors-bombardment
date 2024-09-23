@@ -5,6 +5,8 @@ import { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { ABILITIES, GAME_MODES } from "@/constants";
 import useStore, { type Player } from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface GameplayActionBtnProps {
   player: Player;
@@ -27,6 +29,7 @@ export default function GameplayActionBtn({
     nextRound,
     deletePlayerAbilityInUse,
   } = useStore();
+  const { lng } = useTranslation();
   const router = useRouter();
 
   if (
@@ -50,7 +53,7 @@ export default function GameplayActionBtn({
           handleNavigation(`/gameplay/${playerAfterNextPlayer.id}`);
         }}
       >
-        Next Bettor
+        {t[lng].gameplayActionBtn.nextBettor}
       </Button>
     ) : amountOfRounds > currentRound && players.length > 1 ? (
       <Button
@@ -61,7 +64,7 @@ export default function GameplayActionBtn({
           if (players.length === 2) setForceRender(prev => prev + 1);
         }}
       >
-        Next Round
+        {t[lng].gameplayActionBtn.nextRound}
       </Button>
     ) : (
       <Button
@@ -70,7 +73,7 @@ export default function GameplayActionBtn({
           handleNavigation("/results");
         }}
       >
-        See Results
+        {t[lng].gameplayActionBtn.seeResults}
       </Button>
     );
   }
@@ -82,7 +85,7 @@ export default function GameplayActionBtn({
       disabled={!betMade || player.value === 0}
       onClick={() => router.replace(`/gameplay/${nextPlayer.id}`)}
     >
-      Next Bettor
+      {t[lng].gameplayActionBtn.nextBettor}
     </Button>
   ) : amountOfRounds > currentRound && players.length > 1 ? (
     <Button
@@ -92,14 +95,14 @@ export default function GameplayActionBtn({
         router.replace(`/gameplay/${players[0].id}`);
       }}
     >
-      Next Round
+      {t[lng].gameplayActionBtn.nextRound}
     </Button>
   ) : (
     <Button
       disabled={!betMade || player.value === 0}
       onClick={() => router.replace("/results")}
     >
-      See Results
+      {t[lng].gameplayActionBtn.seeResults}
     </Button>
   );
 }

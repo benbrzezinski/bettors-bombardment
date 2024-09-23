@@ -24,6 +24,8 @@ import { cn } from "@/lib/utils";
 import useStore, { type Player } from "@/store";
 import useAbilityDetails from "@/hooks/use-ability-details";
 import useAbilities from "@/hooks/use-abilities";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface AbilitiesProps {
   player: Player;
@@ -36,6 +38,7 @@ export default function Abilities({ player, betMade }: AbilitiesProps) {
   const { getAbilityDetails } = useAbilityDetails();
   const { runLuckThief, runBalanceEqualizer, runBalanceBooster, runTimeWarp } =
     useAbilities();
+  const { lng } = useTranslation();
 
   const PRE_MOVE_ABILITIES: Ability[] = [
     ABILITIES[0],
@@ -115,22 +118,22 @@ export default function Abilities({ player, betMade }: AbilitiesProps) {
                           {ability === ABILITIES[8] && (
                             <AlertDialogDescription style={{ marginTop: 0 }}>
                               {typeof prevValue === "number"
-                                ? `Balance status before last change: ${prevValue}$.`
-                                : "Balance status is unchanged."}
+                                ? `${t[lng].abilities.timeWarpLabels[0]} ${prevValue}$.`
+                                : t[lng].abilities.timeWarpLabels[1]}
                             </AlertDialogDescription>
                           )}
                           <AlertDialogDescription className="font-medium text-destructive">
-                            It can only be used once!
+                            {t[lng].abilities.note}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogCancel>{t[lng].cancel}</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => {
                               handleUseAbility(ability);
                             }}
                           >
-                            Use
+                            {t[lng].abilities.action}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>

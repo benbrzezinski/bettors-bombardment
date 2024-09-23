@@ -13,9 +13,12 @@ import { Users } from "lucide-react";
 import PlayersScoreboard from "@/components/players-scoreboard";
 import { groupPlayersIfTheyAreTied, sortPlayers } from "@/lib/utils";
 import useStore from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 export default function RealTimePlayersScoreboardMenu() {
   const { players } = useStore();
+  const { lng } = useTranslation();
 
   const sortedPlayers = sortPlayers(players);
   const groupedPlayers = groupPlayersIfTheyAreTied(sortedPlayers);
@@ -32,10 +35,9 @@ export default function RealTimePlayersScoreboardMenu() {
       </SheetTrigger>
       <SheetContent onOpenAutoFocus={e => e.preventDefault()}>
         <SheetHeader className="mb-[20px]">
-          <SheetTitle>Player&rsquo;s Scoreboard</SheetTitle>
+          <SheetTitle>{t[lng].realTimePlayersScoreboardMenu.title}</SheetTitle>
           <SheetDescription>
-            Shows the current status of the results. Updates are made in real
-            time.
+            {t[lng].realTimePlayersScoreboardMenu.description}
           </SheetDescription>
         </SheetHeader>
         <PlayersScoreboard playersWithOptionalTies={groupedPlayers} rawTable />

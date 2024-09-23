@@ -2,20 +2,20 @@ import { useCallback, useState } from "react";
 import { COLORS, type Color } from "@/constants";
 import { getRandomInt } from "@/lib/utils";
 
-const useColorEffects = () => {
-  const [magicColors, setMagicColors] = useState<Color[]>([]);
+const useColors = () => {
+  const [colors, setColors] = useState<Color[]>([]);
 
   const generateRandomizedColors = useCallback(() => {
-    const randomColors: Color[] = [];
+    const randomizedColors: Color[] = [];
     const randomIndexesOfSpecialColors: number[] = [];
     const instantZero = COLORS[0];
     const bigWin = COLORS[1];
 
-    while (randomColors.length < 100) {
+    while (randomizedColors.length < 100) {
       const randomIndex = getRandomInt(0, COLORS.length - 1);
       const color = COLORS[randomIndex];
       if (color === instantZero || color === bigWin) continue;
-      randomColors.push(color);
+      randomizedColors.push(color);
     }
 
     while (randomIndexesOfSpecialColors.length < 3) {
@@ -24,14 +24,14 @@ const useColorEffects = () => {
       randomIndexesOfSpecialColors.push(randomIndex);
     }
 
-    randomColors.splice(randomIndexesOfSpecialColors[0], 1, instantZero);
-    randomColors.splice(randomIndexesOfSpecialColors[1], 1, bigWin);
-    randomColors.splice(randomIndexesOfSpecialColors[2], 1, bigWin);
+    randomizedColors.splice(randomIndexesOfSpecialColors[0], 1, instantZero);
+    randomizedColors.splice(randomIndexesOfSpecialColors[1], 1, bigWin);
+    randomizedColors.splice(randomIndexesOfSpecialColors[2], 1, bigWin);
 
-    setMagicColors(randomColors);
+    setColors(randomizedColors);
   }, []);
 
-  return { magicColors, generateRandomizedColors };
+  return { colors, generateRandomizedColors };
 };
 
-export default useColorEffects;
+export default useColors;

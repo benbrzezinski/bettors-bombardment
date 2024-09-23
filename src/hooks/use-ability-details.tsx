@@ -10,6 +10,8 @@ import {
   History,
 } from "lucide-react";
 import type { Ability } from "@/constants";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface Details {
   icon: React.JSX.Element;
@@ -18,60 +20,54 @@ interface Details {
 }
 
 const useAbilityDetails = () => {
+  const { lng } = useTranslation();
+
   const getAbilityDetails = (ability: Ability) => {
     const details: Record<Ability, Details> = {
-      testYourLuck: {
+      luckTrial: {
         icon: <Receipt />,
-        title: "Test Your Luck",
-        description:
-          "Your next drawn effect is multiplied by 10, whether it is positive or negative.",
+        title: t[lng].abilityDetails.luckTrial.title,
+        description: t[lng].abilityDetails.luckTrial.description,
       },
       secondChance: {
         icon: <HeartHandshake />,
-        title: "Second Chance",
-        description:
-          "You are protected from being zeroed out, but when this happens, your balance will be halved.",
+        title: t[lng].abilityDetails.secondChance.title,
+        description: t[lng].abilityDetails.secondChance.description,
       },
-      skipNextPlayer: {
+      turnStealer: {
         icon: <SkipForward />,
-        title: "Skip Next Player",
-        description:
-          "The next player loses his turn. If this is used at the end of a round, the first player of the next round is skipped, if any.",
+        title: t[lng].abilityDetails.turnStealer.title,
+        description: t[lng].abilityDetails.turnStealer.description,
       },
       luckThief: {
         icon: <Drama />,
-        title: "Luck Thief",
-        description:
-          "Steal 10% of the balance from the player who currently has the highest balance.",
+        title: t[lng].abilityDetails.luckThief.title,
+        description: t[lng].abilityDetails.luckThief.description,
       },
       doubleTrouble: {
         icon: <Grid2x2Check />,
-        title: "Double Trouble",
-        description:
-          "The effect of the next field you reveal is applied twice, whether it is positive or negative.",
+        title: t[lng].abilityDetails.doubleTrouble.title,
+        description: t[lng].abilityDetails.doubleTrouble.description,
       },
       balanceEqualizer: {
         icon: <Equal />,
-        title: "Balance Equalizer",
-        description:
-          "Equalize your balance with the player who currently has the closest balance to yours.",
+        title: t[lng].abilityDetails.balanceEqualizer.title,
+        description: t[lng].abilityDetails.balanceEqualizer.description,
       },
       sneakPeek: {
         icon: <ScanEye />,
-        title: "Sneak Peek",
-        description:
-          "Check the three hidden fields of your choice to see if the effect is positive (green border) or negative (red border).",
+        title: t[lng].abilityDetails.sneakPeek.title,
+        description: t[lng].abilityDetails.sneakPeek.description,
       },
       balanceBooster: {
         icon: <HandCoins />,
-        title: "Balance Booster",
-        description:
-          "Instantly increase your balance by a random amount between 10% and 50% of your current balance.",
+        title: t[lng].abilityDetails.balanceBooster.title,
+        description: t[lng].abilityDetails.balanceBooster.description,
       },
       timeWarp: {
         icon: <History />,
-        title: "Time Warp",
-        description: "Undo the last balance change.",
+        title: t[lng].abilityDetails.timeWarp.title,
+        description: t[lng].abilityDetails.timeWarp.description,
       },
     };
 

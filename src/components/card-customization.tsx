@@ -16,28 +16,33 @@ import { toast } from "@/components/ui/use-toast";
 import {
   GAME_MODES,
   ABILITIES,
+  LANGUAGES,
   type NumberOfPlayers,
   type Ability,
 } from "@/constants";
+import SelectLanguage from "@/components/select-language";
 import SelectNumberOfPlayers from "@/components/select-number-of-players";
 import PlayersData from "@/components/players-data";
 import SelectAmountOfRounds from "@/components/select-amount-of-rounds";
 import SelectGameMode from "@/components/select-game-mode";
 import useStore, { type Player } from "@/store";
+import useTranslation from "@/store/use-translation";
 import useAbilities from "@/hooks/use-abilities";
+import t from "@/translations";
 
 export interface PlayerData {
   name: string;
   value: string;
 }
 
-export default function CardCustomize() {
+export default function CardCustomization() {
   const [numberOfPlayers, setNumberOfPlayers] = useState<0 | NumberOfPlayers>(
     0
   );
   const [playersData, setPlayersData] = useState<PlayerData[]>([]);
   const { amountOfRounds, gameMode, setPlayers } = useStore();
   const { generateRandomizedAbilities } = useAbilities();
+  const { lng } = useTranslation();
   const router = useRouter();
 
   useEffect(() => {
@@ -64,13 +69,23 @@ export default function CardCustomize() {
       ) ||
       playerNames.length !== uniquePlayerNames.length
     ) {
-      toast({
-        duration: 8000,
-        variant: "destructive",
-        title: "Uh, something went wrong!",
-        description:
-          "To start the game, all settings fields are required and must meet all the above conditions (*).",
-      });
+      if (lng === LANGUAGES[0]) {
+        toast({
+          duration: 8000,
+          variant: "destructive",
+          title: "Uh, something went wrong!",
+          description:
+            "To start the game, all settings fields must be filled in and all of the above conditions must be met (*).",
+        });
+      } else {
+        toast({
+          duration: 8000,
+          variant: "destructive",
+          title: "Oj, coś poszło nie tak!",
+          description:
+            "Aby rozpocząć grę, wszystkie pola ustawień muszą być wypełnione oraz wszystkie powyższe warunki muszą być spełnione (*).",
+        });
+      }
 
       return;
     }
@@ -103,13 +118,16 @@ export default function CardCustomize() {
   };
 
   return (
-    <Card className="w-full cursor-default">
+    <Card className="w-full max-w-[500px] cursor-default">
+      <div className="flex justify-center p-6 pb-0">
+        <SelectLanguage />
+      </div>
       <CardHeader className="items-center">
         <CardTitle className="text-[22px] xs:text-2xl">
-          Customize Your Game
+          {t[lng].cardCustomization.title}
         </CardTitle>
         <CardDescription className="text-xs xs:text-sm">
-          Set the desired settings in one-moment.
+          {t[lng].cardCustomization.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -118,17 +136,18 @@ export default function CardCustomize() {
             numberOfPlayers={numberOfPlayers}
             setNumberOfPlayers={setNumberOfPlayers}
           />
-          <PlayersData
-            numberOfPlayers={numberOfPlayers}
-            playersData={playersData}
-            setPlayersData={setPlayersData}
-          />
+          {numberOfPlayers ? (
+            <PlayersData
+              playersData={playersData}
+              setPlayersData={setPlayersData}
+            />
+          ) : null}
           <SelectAmountOfRounds />
           <SelectGameMode />
         </div>
       </CardContent>
       <CardFooter className="flex justify-center">
-        <Button onClick={startGame}>Start the Game</Button>
+        <Button onClick={startGame}>{t[lng].cardCustomization.startBtn}</Button>
       </CardFooter>
     </Card>
   );

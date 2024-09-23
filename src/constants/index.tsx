@@ -12,11 +12,16 @@ export const GAME_MODES = [
   "Randomized Abilities",
 ] as const;
 export type GameMode = (typeof GAME_MODES)[number];
+export const GAME_MODES_PL = [
+  "Normalny",
+  "Zdolności",
+  "Losowe Zdolności",
+] as const;
 
 export const ABILITIES = [
-  "testYourLuck",
+  "luckTrial",
   "secondChance",
-  "skipNextPlayer",
+  "turnStealer",
   "luckThief",
   "doubleTrouble",
   "balanceEqualizer",
@@ -49,3 +54,6 @@ export const COLORS = [
   "lightcoral",
 ] as const;
 export type Color = (typeof COLORS)[number];
+
+export const LANGUAGES = ["en", "pl"] as const;
+export type Language = (typeof LANGUAGES)[number];

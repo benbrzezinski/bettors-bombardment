@@ -14,6 +14,8 @@ import { ChevronRight } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import useStore, { type Player } from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface DefeatPopupMessageProps {
   player: Player;
@@ -24,8 +26,10 @@ export default function DefeatPopupMessage({
   player,
   nextPlayerExists,
 }: DefeatPopupMessageProps) {
+  const TIMEOUT_DELAY = 1000;
   const { players, amountOfRounds, currentRound, deletePlayer, nextRound } =
     useStore();
+  const { lng } = useTranslation();
   const alertTriggerBtnRef = useRef<HTMLButtonElement | null>(null);
   const router = useRouter();
   const nextPlayer = nextPlayerExists();
@@ -36,7 +40,7 @@ export default function DefeatPopupMessage({
 
       const timeoutID = setTimeout(() => {
         triggerBtn.click();
-      }, 1000);
+      }, TIMEOUT_DELAY);
 
       return () => {
         clearTimeout(timeoutID);
@@ -66,11 +70,10 @@ export default function DefeatPopupMessage({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="text-destructive text-2xl">
-            Eliminated
+            {t[lng].defeatPopupMessage.title}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Your balance has been cleared, and you have been removed from the
-            game. To continue, click the button below.
+            {t[lng].defeatPopupMessage.description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

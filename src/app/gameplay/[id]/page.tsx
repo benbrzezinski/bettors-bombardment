@@ -1,9 +1,7 @@
 "use client";
 
-import { Skeleton } from "@/components/ui/skeleton";
 import { useEffect, useState } from "react";
-import useStore from "@/store";
-import useColorEffects from "@/hooks/use-color-effects";
+import { Skeleton } from "@/components/ui/skeleton";
 import GameInfo from "@/components/game-info";
 import BetValueInput from "@/components/bet-value-input";
 import Multiplier from "@/components/multiplier";
@@ -14,6 +12,8 @@ import DefeatPopupMessage from "@/components/defeat-popup-message";
 import RealTimePlayersScoreboardMenu from "@/components/real-time-players-scoreboard-menu";
 import QuitBtn from "@/components/quit-btn";
 import PlayerNotFound from "@/components/player-not-found";
+import useStore from "@/store";
+import useColors from "@/hooks/use-colors";
 
 interface GameplayDetailsProps {
   params: {
@@ -27,7 +27,7 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
   const [betMade, setBetMade] = useState(false);
   const [forceRender, setForceRender] = useState(0);
   const { players } = useStore();
-  const { magicColors, generateRandomizedColors } = useColorEffects();
+  const { colors, generateRandomizedColors } = useColors();
 
   const player = players.find(p => p.id === params.id);
 
@@ -61,12 +61,12 @@ export default function GameplayDetails({ params }: GameplayDetailsProps) {
           setBetValue={setBetValue}
           setBetSubmitted={setBetSubmitted}
         />
-        {magicColors.length > 0 ? (
+        {colors.length > 0 ? (
           <div className="relative">
             <Multiplier />
             <HiddenFields
               key={forceRender}
-              magicColors={magicColors}
+              colors={colors}
               betValue={betValue}
               betSubmitted={betSubmitted}
               betMade={betMade}

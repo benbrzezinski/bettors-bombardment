@@ -4,6 +4,9 @@ import { Dispatch, SetStateAction } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import { LANGUAGES } from "@/constants";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 interface BetValueInputProps {
   betValue: string;
@@ -22,6 +25,8 @@ export default function BetValueInput({
   setBetValue,
   setBetSubmitted,
 }: BetValueInputProps) {
+  const { lng } = useTranslation();
+
   const submitBet = () => {
     const betValueParsed = parseInt(betValue);
 
@@ -31,12 +36,21 @@ export default function BetValueInput({
       betValueParsed > playerValue ||
       betValueParsed < 1
     ) {
-      toast({
-        duration: 10000,
-        variant: "destructive",
-        title: "Uh, something went wrong!",
-        description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${playerValue}$.`,
-      });
+      if (lng === LANGUAGES[0]) {
+        toast({
+          duration: 10000,
+          variant: "destructive",
+          title: "Uh, something went wrong!",
+          description: `Set the amount you want to bet, remember that the bet value must be within the range of your balance: ${playerValue}$.`,
+        });
+      } else {
+        toast({
+          duration: 10000,
+          variant: "destructive",
+          title: "Oj, coś poszło nie tak!",
+          description: `Ustaw kwotę, jaką chcesz postawić, pamiętaj, że wartość zakładu musi mieścić się w zakresie twojego salda: ${playerValue}$.`,
+        });
+      }
 
       return;
     }
@@ -55,7 +69,7 @@ export default function BetValueInput({
         type="text"
         name="bet-value"
         inputMode="numeric"
-        placeholder="Value to bet"
+        placeholder={t[lng].betValueInput.placeholder}
         className="max-w-[500px] text-base"
         value={betValue}
         disabled={betSubmitted || betMade}
@@ -71,21 +85,21 @@ export default function BetValueInput({
           disabled={betSubmitted || betMade}
           onClick={submitBet}
         >
-          Submit
+          {t[lng].betValueInput.submit}
         </Button>
         <Button
           variant="secondary"
           disabled={betSubmitted || betMade}
           onClick={() => setBetValue(playerValue.toString())}
         >
-          Max
+          {t[lng].betValueInput.max}
         </Button>
         <Button
           variant="outline"
           disabled={!betSubmitted || betMade}
           onClick={resetBet}
         >
-          Reset
+          {t[lng].betValueInput.reset}
         </Button>
       </div>
     </div>

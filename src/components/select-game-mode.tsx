@@ -8,15 +8,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { GAME_MODES, type GameMode } from "@/constants";
+import {
+  GAME_MODES,
+  GAME_MODES_PL,
+  LANGUAGES,
+  type GameMode,
+} from "@/constants";
 import useStore from "@/store";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 
 export default function SelectGameMode() {
   const { gameMode, setGameMode } = useStore();
+  const { lng } = useTranslation();
 
   return (
     <div className="flex flex-col gap-[6px]">
-      <Label htmlFor="mode">Game mode</Label>
+      <Label htmlFor="mode">{t[lng].cardCustomization.gameMode}</Label>
       <Select
         name="game-mode"
         value={gameMode}
@@ -28,11 +36,17 @@ export default function SelectGameMode() {
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {GAME_MODES.map(mode => (
-            <SelectItem value={mode} key={mode}>
-              {mode}
-            </SelectItem>
-          ))}
+          {lng === LANGUAGES[0]
+            ? GAME_MODES.map(mode => (
+                <SelectItem value={mode} key={mode}>
+                  {mode}
+                </SelectItem>
+              ))
+            : GAME_MODES.map((mode, i) => (
+                <SelectItem value={mode} key={mode}>
+                  {GAME_MODES_PL[i]}
+                </SelectItem>
+              ))}
         </SelectContent>
       </Select>
     </div>
