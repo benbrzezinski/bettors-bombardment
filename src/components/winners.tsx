@@ -3,6 +3,8 @@
 import Lottie from "lottie-react";
 import type { Player } from "@/store";
 import { cn } from "@/lib/utils";
+import useTranslation from "@/store/use-translation";
+import t from "@/translations";
 import crown from "@/lotties/crown.json";
 
 interface WinnersProps {
@@ -10,10 +12,14 @@ interface WinnersProps {
 }
 
 export default function Winners({ winners }: WinnersProps) {
+  const { lng } = useTranslation();
+
   return winners.length > 0 ? (
     <div className="flex flex-col items-center font-bold text-center cursor-default">
       <p className="text-3xl md:text-4xl">
-        {winners.length === 1 ? "Winner" : "Winners"}
+        {winners.length === 1
+          ? t[lng].winners.winTitles.singular
+          : t[lng].winners.winTitles.plural}
       </p>
       <Lottie
         animationData={crown}
@@ -38,7 +44,7 @@ export default function Winners({ winners }: WinnersProps) {
     </div>
   ) : (
     <p className="text-3xl md:text-4xl font-bold text-center text-destructive cursor-default">
-      Everyone lost
+      {t[lng].winners.loseTitle}
     </p>
   );
 }

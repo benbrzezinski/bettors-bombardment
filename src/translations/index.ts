@@ -135,9 +135,9 @@ const t = {
       },
     },
     realTimePlayersScoreboardMenu: {
-      title: "Player Scoreboard",
+      title: "Scoreboard",
       description:
-        "Shows the current status of the results. Updates are made in real time.",
+        "Displays the current state of the game. Updates are made in real-time.",
     },
     playersScoreboard: {
       label: "Other Positions",
@@ -157,6 +157,16 @@ const t = {
     playerNotFound: {
       text: "Bettor not found. Please start the game again.",
       restart: "Restart",
+    },
+    winners: {
+      winTitles: {
+        singular: "Winner",
+        plural: "Winners",
+      },
+      loseTitle: "Everyone lost",
+    },
+    newGameBtn: {
+      text: "New game",
     },
   },
   pl: {
@@ -296,9 +306,9 @@ const t = {
       },
     },
     realTimePlayersScoreboardMenu: {
-      title: "Tablica Wyników Graczy",
+      title: "Tablica Wyników",
       description:
-        "Pokazuje aktualny stan wyników. Aktualizacje są dokonywane w czasie rzeczywistym.",
+        "Pokazuje aktualny stan rozgrywki. Aktualizacje są dokonywane w czasie rzeczywistym.",
     },
     playersScoreboard: {
       label: "Kolejne Pozycje",
@@ -318,6 +328,16 @@ const t = {
     playerNotFound: {
       text: "Nie znaleziono gracza. Proszę rozpocząć grę ponownie.",
       restart: "Uruchom ponownie",
+    },
+    winners: {
+      winTitles: {
+        singular: "Zwycięzca",
+        plural: "Zwycięzcy",
+      },
+      loseTitle: "Wszyscy przegrali",
+    },
+    newGameBtn: {
+      text: "Nowa gra",
     },
   },
 } as const;
