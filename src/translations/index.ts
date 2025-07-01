@@ -317,7 +317,7 @@ const t = {
     defeatPopupMessage: {
       title: "Przegrałeś",
       description:
-        "Twoje saldo zostało wyzerowane, a ty zostałeś usunięty z gry. Aby kontynuować, kliknij przycisk poniżej.",
+        "Twoje saldo zostało wyzerowane i zostałeś usunięty z gry. Aby kontynuować, kliknij przycisk poniżej.",
     },
     quitBtn: {
       title: "Czy chcesz wyjść z gry?",

@@ -7,7 +7,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LANGUAGES, type Language } from "@/constants";
 import useTranslation from "@/store/use-translation";
 
@@ -29,14 +28,11 @@ export default function SelectLanguage() {
         {LANGUAGES.map(lng => (
           <SelectItem value={lng} key={lng}>
             <div className="flex items-center gap-[8px]">
-              <Avatar className="size-[24px] rounded-none">
-                <AvatarImage
-                  src={`/assets/svgs/${lng}.svg`}
-                  alt={lng}
-                  loading="eager"
-                />
-                <AvatarFallback className="rounded-none" />
-              </Avatar>
+              <div
+                className="w-[24px] h-[18px] bg-no-repeat bg-center bg-contain bg-white/30"
+                style={{ backgroundImage: `url(/assets/svgs/${lng}.svg)` }}
+              />
+
               <p>{lng.toLocaleUpperCase()}</p>
             </div>
           </SelectItem>

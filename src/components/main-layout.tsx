@@ -1,26 +1,26 @@
 "use client";
 
-import { Inter } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
+import { useEffect } from "react";
 import useTranslation from "@/store/use-translation";
-
-const font = Inter({
-  subsets: ["latin"],
-});
+import { Toaster } from "@/components/ui/toaster";
 
 export default function MainLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: {
+  children: React.ReactNode;
+}) {
   const { lng } = useTranslation();
 
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = lng;
+    }
+  }, [lng]);
+
   return (
-    <html lang={lng}>
-      <body className={font.className}>
-        <main className="min-h-dvh flex justify-center items-center py-[50px] px-[15px] container antialiased relative">
-          {children}
-        </main>
-        <Toaster />
-      </body>
-    </html>
+    <>
+      {children}
+      <Toaster />
+    </>
   );
 }
