@@ -10,6 +10,7 @@ export default function RootTemplate({
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ ease: "easeInOut", duration: 0.75 }}
+      aria-hidden={false}
     >
       {children}
     </motion.div>

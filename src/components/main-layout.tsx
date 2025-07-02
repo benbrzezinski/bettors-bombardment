@@ -19,7 +19,9 @@ export default function MainLayout({
 
   return (
     <>
-      {children}
+      <main className="min-h-dvh flex justify-center items-center py-[50px] px-[15px] container antialiased relative">
+        {children}
+      </main>
       <Toaster />
     </>
   );

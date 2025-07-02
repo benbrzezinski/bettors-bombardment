@@ -20,9 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <main className="min-h-dvh flex justify-center items-center py-[50px] px-[15px] container antialiased relative">
-          <MainLayout>{children}</MainLayout>
-        </main>
+        <MainLayout>{children}</MainLayout>
       </body>
     </html>
   );

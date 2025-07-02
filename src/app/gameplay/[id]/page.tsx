@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import GameInfo from "@/components/game-info";
@@ -11,9 +12,12 @@ import AbilitiesMenu from "@/components/abilities-menu";
 import DefeatPopupMessage from "@/components/defeat-popup-message";
 import RealTimePlayersScoreboardMenu from "@/components/real-time-players-scoreboard-menu";
 import QuitBtn from "@/components/quit-btn";
-import PlayerNotFound from "@/components/player-not-found";
 import useStore from "@/store";
 import useColors from "@/hooks/use-colors";
+
+const PlayerNotFound = dynamic(() => import("@/components/player-not-found"), {
+  ssr: false,
+});
 
 interface GameplayDetailsProps {
   params: {

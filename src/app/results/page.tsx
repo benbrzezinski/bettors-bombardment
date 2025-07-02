@@ -1,10 +1,14 @@
 "use client";
 
-import Winners from "@/components/winners";
+import dynamic from "next/dynamic";
 import PlayersScoreboard from "@/components/players-scoreboard";
 import NewGameBtn from "@/components/new-game-btn";
 import { groupPlayersIfTheyAreTied, cn, sortPlayers } from "@/lib/utils";
 import useStore from "@/store";
+
+const Winners = dynamic(() => import("@/components/winners"), {
+  ssr: false,
+});
 
 export default function Results() {
   const { players } = useStore();
