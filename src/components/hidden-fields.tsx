@@ -2,7 +2,7 @@
 
 import { Dispatch, MouseEvent, SetStateAction, useRef } from "react";
 import { toast } from "@/components/ui/use-toast";
-import { cn, covertLargerNumberIntoSimplerForm } from "@/lib/utils";
+import { cn, abbreviateNumber } from "@/lib/utils";
 import { colorEffects } from "@/data/color-effects";
 import { ABILITIES, GAME_MODES, LANGUAGES, type Color } from "@/constants";
 import useStore, { type Player } from "@/store";
@@ -91,9 +91,7 @@ export default function HiddenFields({
     }
 
     btn.setAttribute("style", btnStyle);
-    btn.innerText = `${operation ?? ""}${covertLargerNumberIntoSimplerForm(
-      effectValue
-    )}`;
+    btn.innerText = `${operation ?? ""}${abbreviateNumber(effectValue)}`;
 
     updatePlayerBalance(player.id, betValueParsed, effectValue, operation);
 

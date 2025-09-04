@@ -45,7 +45,7 @@ export const groupPlayersIfTheyAreTied = (sortedPlayers: Player[]) => {
       currentPlayer.value === previousPlayer.value &&
       currentGroup
     ) {
-      currentGroup.players.push({ ...currentPlayer, value: 0 });
+      currentGroup.players.push({ ...currentPlayer });
     } else {
       if (currentGroup) {
         result.push(currentGroup);
@@ -62,7 +62,7 @@ export const groupPlayersIfTheyAreTied = (sortedPlayers: Player[]) => {
   return result;
 };
 
-export const covertLargerNumberIntoSimplerForm = (n: number) => {
+export const abbreviateNumber = (n: number) => {
   if (n >= 1000) {
     return `${n / 1000}K`;
   }

@@ -40,7 +40,7 @@ export default function RealTimePlayersScoreboardMenu() {
             {t[lng].realTimePlayersScoreboardMenu.description}
           </SheetDescription>
         </SheetHeader>
-        <PlayersScoreboard playersWithOptionalTies={groupedPlayers} rawTable />
+        <PlayersScoreboard playersWithOptionalTies={groupedPlayers} tableOnly />
       </SheetContent>
     </Sheet>
   );

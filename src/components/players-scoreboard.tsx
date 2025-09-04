@@ -14,18 +14,18 @@ import t from "@/translations";
 
 interface PlayersScoreboardProps {
   playersWithOptionalTies: PlayersWithOptionalTies[];
-  rawTable?: boolean;
+  tableOnly?: boolean;
 }
 
 export default function PlayersScoreboard({
   playersWithOptionalTies,
-  rawTable = false,
+  tableOnly = false,
 }: PlayersScoreboardProps) {
   const { lng } = useTranslation();
 
   return playersWithOptionalTies.length > 0 ? (
     <>
-      {!rawTable && (
+      {!tableOnly && (
         <p className="font-bold text-3xl md:text-4xl cursor-default">
           {t[lng].playersScoreboard.label}
         </p>
@@ -47,14 +47,14 @@ export default function PlayersScoreboard({
         <TableBody className="font-medium text-center">
           {playersWithOptionalTies.map(({ players }, i) => (
             <TableRow key={i}>
-              <TableCell>{rawTable ? i + 1 : i + 2}</TableCell>
+              <TableCell>{tableOnly ? i + 1 : i + 2}</TableCell>
               <TableCell className="flex flex-col items-center gap-[5px]">
                 {players.map(({ id, name }) => (
                   <p key={id}>{name}</p>
                 ))}
               </TableCell>
               <TableCell>
-                <p>{players.find(({ value }) => value !== 0)?.value}$</p>
+                <p>{players[0].value}$</p>
               </TableCell>
             </TableRow>
           ))}
