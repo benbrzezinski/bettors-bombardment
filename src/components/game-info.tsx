@@ -2,6 +2,7 @@
 
 import useStore, { type Player } from "@/store";
 import useTranslation from "@/store/use-translation";
+import { formatNumber } from "@/lib/utils";
 import t from "@/translations";
 
 interface GameInfoProps {
@@ -14,9 +15,9 @@ export default function GameInfo({ player, betValue }: GameInfoProps) {
   const { lng } = useTranslation();
 
   const getBalanceInRealTime = (playerValue: number) => {
-    if (betValue.startsWith("0")) return `${playerValue}$`;
+    if (betValue.startsWith("0")) return `${formatNumber(playerValue)}$`;
     const balance = playerValue - Number(betValue);
-    return balance < 0 ? t[lng].gameInfo.bet : `${balance}$`;
+    return balance < 0 ? t[lng].gameInfo.bet : `${formatNumber(balance)}$`;
   };
 
   return (

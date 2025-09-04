@@ -45,13 +45,13 @@ export const groupPlayersIfTheyAreTied = (sortedPlayers: Player[]) => {
       currentPlayer.value === previousPlayer.value &&
       currentGroup
     ) {
-      currentGroup.players.push({ ...currentPlayer });
+      currentGroup.players.push(currentPlayer);
     } else {
       if (currentGroup) {
         result.push(currentGroup);
       }
 
-      currentGroup = { players: [{ ...currentPlayer }] };
+      currentGroup = { players: [currentPlayer] };
     }
   }
 
@@ -68,6 +68,10 @@ export const abbreviateNumber = (n: number) => {
   }
 
   return n;
+};
+
+export const formatNumber = (n: number) => {
+  return n.toLocaleString("en-US");
 };
 
 export const sortPlayers = (players: Player[]) => {

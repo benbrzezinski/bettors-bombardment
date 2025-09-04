@@ -2,7 +2,7 @@
 
 import Lottie from "lottie-react";
 import type { Player } from "@/store";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import useTranslation from "@/store/use-translation";
 import t from "@/translations";
 import crown from "@/lotties/crown.json";
@@ -38,7 +38,7 @@ export default function Winners({ winners }: WinnersProps) {
           </p>
         ))}
         <p className="text-lg md:text-2xl border-b border-secondary pt-[20px] px-[15px] pb-[15px] break-all">
-          {winners[0].value}$
+          {formatNumber(winners[0].value)}$
         </p>
       </div>
     </div>

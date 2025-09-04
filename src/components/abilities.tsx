@@ -20,7 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { ABILITIES, GAME_MODES, type Ability } from "@/constants";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import useStore, { type Player } from "@/store";
 import useAbilityDetails from "@/hooks/use-ability-details";
 import useAbilities from "@/hooks/use-abilities";
@@ -118,7 +118,9 @@ export default function Abilities({ player, betMade }: AbilitiesProps) {
                           {ability === ABILITIES[8] && (
                             <AlertDialogDescription style={{ marginTop: 0 }}>
                               {typeof prevValue === "number"
-                                ? `${t[lng].abilities.timeWarpLabels[0]} ${prevValue}$.`
+                                ? `${
+                                    t[lng].abilities.timeWarpLabels[0]
+                                  } ${formatNumber(prevValue)}$.`
                                 : t[lng].abilities.timeWarpLabels[1]}
                             </AlertDialogDescription>
                           )}

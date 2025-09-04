@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { PlayersWithOptionalTies } from "@/lib/utils";
+import { formatNumber, type PlayersWithOptionalTies } from "@/lib/utils";
 import useTranslation from "@/store/use-translation";
 import t from "@/translations";
 
@@ -54,7 +54,7 @@ export default function PlayersScoreboard({
                 ))}
               </TableCell>
               <TableCell>
-                <p>{players[0].value}$</p>
+                <p>{formatNumber(players[0].value)}$</p>
               </TableCell>
             </TableRow>
           ))}

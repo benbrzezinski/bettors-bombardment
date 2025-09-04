@@ -31,6 +31,10 @@ interface State {
   currentRound: number;
   gameMode: GameMode;
   setPlayers: (players: Player[]) => void;
+  setAmountOfRounds: (amountOfRounds: AmountOfRounds) => void;
+  nextRound: () => void;
+  setGameMode: (gameMode: GameMode) => void;
+  resetStore: () => void;
   setPlayerBalance: (id: string, value: number) => void;
   setPlayerPrevBalance: (id: string, prevValue: number) => void;
   updatePlayerBalance: (
@@ -43,10 +47,6 @@ interface State {
   deletePlayerAbility: (id: string, ability: Ability) => void;
   addPlayerAbilityInUse: (id: string, ability: Ability) => void;
   deletePlayerAbilityInUse: (id: string, ability: Ability) => void;
-  setAmountOfRounds: (amountOfRounds: AmountOfRounds) => void;
-  nextRound: () => void;
-  setGameMode: (gameMode: GameMode) => void;
-  resetStore: () => void;
 }
 
 const initialState: InitialState = {
@@ -58,7 +58,13 @@ const initialState: InitialState = {
 
 const useStore = create<State>(set => ({
   ...initialState,
+
   setPlayers: players => set({ players }),
+  setAmountOfRounds: amountOfRounds => set({ amountOfRounds }),
+  nextRound: () => set(state => ({ currentRound: state.currentRound + 1 })),
+  setGameMode: gameMode => set({ gameMode }),
+  resetStore: () => set(initialState),
+
   setPlayerBalance: (id, value) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -70,6 +76,7 @@ const useStore = create<State>(set => ({
 
       return { players: updatedPlayers };
     }),
+
   setPlayerPrevBalance: (id, prevValue) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -81,6 +88,7 @@ const useStore = create<State>(set => ({
 
       return { players: updatedPlayers };
     }),
+
   updatePlayerBalance: (id, betValue, effectValue, operation) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -120,11 +128,13 @@ const useStore = create<State>(set => ({
 
       return { players: updatedPlayers };
     }),
+
   deletePlayer: id =>
     set(state => {
       const updatedPlayers = state.players.filter(p => p.id !== id);
       return { players: updatedPlayers };
     }),
+
   deletePlayerAbility: (id, ability) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -140,6 +150,7 @@ const useStore = create<State>(set => ({
 
       return { players: updatedPlayers };
     }),
+
   addPlayerAbilityInUse: (id, ability) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -151,6 +162,7 @@ const useStore = create<State>(set => ({
 
       return { players: updatedPlayers };
     }),
+
   deletePlayerAbilityInUse: (id, ability) =>
     set(state => {
       const updatedPlayers = [...state.players];
@@ -168,10 +180,6 @@ const useStore = create<State>(set => ({
 
       return { players: updatedPlayers };
     }),
-  setAmountOfRounds: amountOfRounds => set({ amountOfRounds }),
-  nextRound: () => set(state => ({ currentRound: state.currentRound + 1 })),
-  setGameMode: gameMode => set({ gameMode }),
-  resetStore: () => set(initialState),
 }));
 
 export default useStore;
