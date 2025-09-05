@@ -49,11 +49,13 @@ export default function DefeatPopupMessage({
   }, [player.value]);
 
   const handleAction = () => {
+    const remainingPlayerCount = players.length - 1;
+
     deletePlayer(player.id);
 
     if (nextPlayer) {
       router.replace(`/gameplay/${nextPlayer.id}`);
-    } else if (amountOfRounds > currentRound && players.length > 2) {
+    } else if (amountOfRounds > currentRound && remainingPlayerCount > 1) {
       nextRound();
       router.replace(`/gameplay/${players[0].id}`);
     } else {

@@ -14,9 +14,11 @@ export default function Results() {
   const { players } = useStore();
 
   const sortedPlayers = sortPlayers(players);
+
   const winners = sortedPlayers.filter(
     player => player.value === sortedPlayers[0].value
   );
+
   const remainingPlayers = groupPlayersIfTheyAreTied(
     sortedPlayers.slice(winners.length)
   );
